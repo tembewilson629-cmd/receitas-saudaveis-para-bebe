@@ -77,14 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "+100 Receitas Saudáveis para Bebés" },
+      { name: "description", content: "Guia de receitas saudáveis para bebés dos 6 aos 24 meses." },
+      { name: "author", content: "Sabores que Crescem" },
+      { property: "og:title", content: "+100 Receitas Saudáveis para Bebés" },
+      { property: "og:description", content: "Guia de receitas saudáveis para bebés dos 6 aos 24 meses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
