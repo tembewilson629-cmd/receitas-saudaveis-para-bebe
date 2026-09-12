@@ -20,6 +20,12 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "text/javascript",
+        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','4083380155288045');fbq('track','PageView');`,
+      },
+    ],
   }),
 });
 
@@ -47,6 +53,15 @@ const guideContents = [
 function Index() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <noscript>
+        <img
+          alt=""
+          height="1"
+          width="1"
+          style={{ display: "none" }}
+          src="https://www.facebook.com/tr?id=4083380155288045&ev=PageView&noscript=1"
+        />
+      </noscript>
       <section className="px-5 pb-8 pt-10 sm:pt-14">
         <h1 className="mx-auto max-w-3xl text-center text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
           +100 Receitas <span className="text-health">Saudáveis</span> para Bebés
