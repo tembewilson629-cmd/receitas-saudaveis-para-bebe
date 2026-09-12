@@ -1,12 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import carouselCover from "../assets/Screenshot_20260912-054514_OneDrive.jpg.asset.json";
-import copyrightPage from "../assets/Screenshot_20260912-054522_OneDrive.jpg.asset.json";
-import guidePage from "../assets/Screenshot_20260912-054534_OneDrive.jpg.asset.json";
-import sweetPotatoPage from "../assets/Screenshot_20260912-054552_OneDrive.jpg.asset.json";
-import beanPage from "../assets/Screenshot_20260912-054609_OneDrive.jpg.asset.json";
-import beanCourgettePage from "../assets/Screenshot_20260912-054730_OneDrive.jpg.asset.json";
-import vegetableSaladPage from "../assets/Screenshot_20260912-054811_OneDrive.jpg.asset.json";
-import fruitSaladPage from "../assets/Screenshot_20260912-054828_OneDrive.jpg.asset.json";
 import offerCover from "../assets/file_00000000898c8211bbac3c406716fa09.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -32,14 +24,14 @@ export const Route = createFileRoute("/")({
 });
 
 const carouselImages = [
-  { src: carouselCover.url, alt: "Capa do e-book Sabores que Crescem" },
-  { src: copyrightPage.url, alt: "Página de copyright e aviso do e-book" },
-  { src: guidePage.url, alt: "Página com orientações para usar o e-book" },
-  { src: sweetPotatoPage.url, alt: "Receita de papa de batata-doce" },
-  { src: beanPage.url, alt: "Receita de papa de feijão-nhemba" },
-  { src: beanCourgettePage.url, alt: "Receita de papa de feijão-nhemba com courgette" },
-  { src: vegetableSaladPage.url, alt: "Receita de salada de legumes cozidos em cubos" },
-  { src: fruitSaladPage.url, alt: "Receita de salada de fruta em cubos" },
+  { src: "/carousel/receita-1.jpg", alt: "Capa do e-book Sabores que Crescem" },
+  { src: "/carousel/receita-2.jpg", alt: "Página de copyright e aviso do e-book" },
+  { src: "/carousel/receita-3.jpg", alt: "Página com orientações para usar o e-book" },
+  { src: "/carousel/receita-4.jpg", alt: "Receita de papa de batata-doce" },
+  { src: "/carousel/receita-5.jpg", alt: "Receita de papa de feijão-nhemba" },
+  { src: "/carousel/receita-6.jpg", alt: "Receita de papa de feijão-nhemba com courgette" },
+  { src: "/carousel/receita-7.jpg", alt: "Receita de salada de legumes cozidos em cubos" },
+  { src: "/carousel/receita-8.jpg", alt: "Receita de salada de fruta em cubos" },
 ];
 
 const guideContents = [
@@ -62,6 +54,7 @@ function Index() {
       </section>
 
       <section className="mx-auto max-w-sm px-5 pb-12 sm:max-w-md">
+        <p className="mb-4 text-center text-lg font-semibold">Veja o que você vai receber</p>
         <div className="aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
           <iframe
             className="h-full w-full border-0"
@@ -76,6 +69,10 @@ function Index() {
 
       <section className="border-y border-border bg-carousel py-10" aria-label="Páginas do e-book">
         <div className="mx-auto max-w-6xl">
+          <div className="px-5 pb-6 text-center">
+            <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">As receitas na prática</h2>
+            <p className="mt-2 text-sm font-medium text-muted-foreground">Deslize para ver mais receitas →</p>
+          </div>
           <div className="carousel-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:gap-5">
             {carouselImages.map((image, index) => (
               <figure
@@ -88,7 +85,8 @@ function Index() {
                   alt={image.alt}
                   width={768}
                   height={1280}
-                  loading={index < 5 ? "eager" : "lazy"}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : index === 1 ? "auto" : "low"}
                   decoding="async"
                 />
               </figure>
@@ -124,8 +122,12 @@ function Index() {
                 </li>
               ))}
             </ul>
+            <div className="mt-7" aria-label="Preço promocional">
+              <p className="text-lg font-semibold text-muted-foreground line-through">250 MZN</p>
+              <p className="mt-1 text-3xl font-extrabold text-foreground">Por apenas 175 MZN</p>
+            </div>
             <a
-              className="mt-8 flex min-h-14 w-full items-center justify-center rounded-lg bg-primary px-6 py-4 text-center text-lg font-bold text-primary-foreground shadow-cta transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:w-fit md:min-w-64"
+              className="mt-6 flex min-h-14 w-full items-center justify-center rounded-lg bg-primary px-6 py-4 text-center text-lg font-bold text-primary-foreground shadow-cta transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:w-fit md:min-w-64"
               href="https://checkout.escalepay.com/5515180"
             >
               Adquirir o Guia
