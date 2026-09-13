@@ -77,6 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "color-scheme", content: "only light" },
       { title: "+100 Receitas Saudáveis para Bebés" },
       { name: "description", content: "Guia de receitas saudáveis para bebés dos 6 aos 24 meses." },
       { name: "author", content: "Sabores que Crescem" },
