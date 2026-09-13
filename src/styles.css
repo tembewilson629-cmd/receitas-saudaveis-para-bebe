@@ -71,7 +71,7 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: only light;
   --radius: 0.5rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.19 0.01 255);
@@ -79,8 +79,8 @@
   --card-foreground: oklch(0.19 0.01 255);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.19 0.01 255);
-  --primary: oklch(0.69 0.11 236);
-  --primary-hover: oklch(0.62 0.13 238);
+  --primary: oklch(0.65 0.14 236);
+  --primary-hover: oklch(0.57 0.15 238);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.96 0.02 226);
   --secondary-foreground: oklch(0.24 0.03 242);
@@ -93,14 +93,14 @@
   --border: oklch(0.91 0.01 238);
   --input: oklch(0.91 0.01 238);
   --ring: oklch(0.62 0.13 238);
-  --health: oklch(0.59 0.12 145);
-  --carousel: oklch(0.975 0.008 235);
-  --offer: oklch(0.98 0.012 220);
+  --health: oklch(0.55 0.14 145);
+  --carousel: oklch(0.95 0.035 230);
+  --offer: oklch(0.955 0.035 220);
   --video: oklch(0.16 0.01 250);
   --shadow-video: 0 18px 45px color-mix(in oklab, var(--foreground) 16%, transparent);
   --shadow-image: 0 8px 24px color-mix(in oklab, var(--foreground) 10%, transparent);
-  --shadow-cover: 0 24px 48px color-mix(in oklab, var(--foreground) 18%, transparent);
-  --shadow-cta: 0 12px 28px color-mix(in oklab, var(--primary) 30%, transparent);
+  --shadow-cover: 0 24px 48px color-mix(in oklab, var(--foreground) 22%, transparent);
+  --shadow-cta: 0 12px 28px color-mix(in oklab, var(--primary) 38%, transparent);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -117,6 +117,11 @@
 }
 
 @layer base {
+  html {
+    color-scheme: only light;
+    background-color: var(--color-background);
+  }
+
   * {
     border-color: var(--color-border);
   }
@@ -128,6 +133,26 @@
     margin: 0;
     min-width: 320px;
     -webkit-font-smoothing: antialiased;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: only light;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.19 0.01 255);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.19 0.01 255);
+    --primary: oklch(0.65 0.14 236);
+    --primary-hover: oklch(0.57 0.15 238);
+    --primary-foreground: oklch(1 0 0);
+    --muted-foreground: oklch(0.43 0.015 250);
+    --border: oklch(0.91 0.01 238);
+    --ring: oklch(0.57 0.15 238);
+    --health: oklch(0.55 0.14 145);
+    --carousel: oklch(0.95 0.035 230);
+    --offer: oklch(0.955 0.035 220);
+    --video: oklch(0.16 0.01 250);
   }
 }
 
