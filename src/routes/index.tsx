@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import offerCover from "../assets/file_00000000898c8211bbac3c406716fa09.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -92,6 +92,19 @@ function MiniVsl() {
 }
 
 function Index() {
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+
+  const handleCheckoutClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    if (isCheckoutLoading) return;
+
+    setIsCheckoutLoading(true);
+    window.setTimeout(() => {
+      window.location.assign("https://checkout.escalepay.com/5515180");
+    }, 350);
+  };
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <noscript>
@@ -144,10 +157,10 @@ function Index() {
         </div>
       </section>
 
-      <section className="bg-offer px-5 py-14 sm:py-20">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[minmax(280px,0.85fr)_minmax(0,1fr)] md:gap-16">
+      <section className="bg-offer px-4 py-12 sm:px-6 sm:py-20">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-lg border border-offer-border bg-card px-5 py-7 shadow-offer sm:px-8 sm:py-10 md:grid-cols-[minmax(280px,0.85fr)_minmax(0,1fr)] md:gap-14 lg:px-12">
           <img
-            className="mx-auto h-auto w-full max-w-sm rounded-lg shadow-cover"
+            className="mx-auto h-auto w-full max-w-xs rounded-lg shadow-cover sm:max-w-sm"
             src={offerCover.url}
             alt="Capa do guia Sabores que Crescem"
             width={768}
@@ -156,30 +169,47 @@ function Index() {
             decoding="async"
           />
 
-          <div>
+          <div className="min-w-0">
+            <p className="mb-4 w-fit rounded-full bg-offer-badge px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-offer-badge-foreground">
+              Oferta especial
+            </p>
             <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">
               +100 Receitas <span className="text-health">Saudáveis</span> para Bebés
             </h2>
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-5 border-l-4 border-health pl-4 text-lg font-semibold leading-relaxed text-foreground">
               Um guia completo com receitas para bebés dos 6 aos 24 meses. Dentro do guia:
             </p>
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-6 space-y-3.5">
               {guideContents.map((item) => (
-                <li className="flex items-start gap-3 text-base leading-relaxed" key={item}>
+                <li className="flex items-start gap-3 text-[1.0625rem] leading-relaxed" key={item}>
                   <span className="mt-2 size-2 shrink-0 rounded-full bg-health" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-7" aria-label="Preço promocional">
-              <p className="text-lg font-semibold text-muted-foreground line-through">250 MZN</p>
-              <p className="mt-1 text-3xl font-extrabold text-foreground">Por apenas 175 MZN</p>
+            <div className="mt-8 border-y border-offer-border py-6" aria-label="Preço promocional">
+              <p className="text-xl font-extrabold text-price-old line-through decoration-2">250 MZN</p>
+              <p className="mt-2 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">Por apenas</p>
+              <p className="mt-1 text-5xl font-black leading-none text-price sm:text-6xl">175 MZN</p>
+              <p className="mt-4 w-fit rounded-md bg-savings px-3 py-2 text-sm font-extrabold text-savings-foreground">
+                Você economiza 75 MZN
+              </p>
             </div>
             <a
-              className="mt-6 flex min-h-14 w-full items-center justify-center rounded-lg bg-primary px-6 py-4 text-center text-lg font-bold text-primary-foreground shadow-cta transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:w-fit md:min-w-64"
+              className={`offer-cta mt-6 flex min-h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary px-6 py-4 text-center text-lg font-extrabold text-primary-foreground shadow-cta transition-all hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] md:min-w-72 ${isCheckoutLoading ? "pointer-events-none opacity-90" : ""}`}
               href="https://checkout.escalepay.com/5515180"
+              aria-busy={isCheckoutLoading}
+              aria-disabled={isCheckoutLoading}
+              onClick={handleCheckoutClick}
             >
-              Adquirir o Guia
+              {isCheckoutLoading ? (
+                <>
+                  <span className="size-5 shrink-0 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" aria-hidden="true" />
+                  <span>Acessando checkout...</span>
+                </>
+              ) : (
+                "Adquirir o Guia"
+              )}
             </a>
           </div>
         </div>

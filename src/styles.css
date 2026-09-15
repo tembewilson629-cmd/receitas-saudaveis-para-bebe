@@ -70,11 +70,19 @@
   --color-headline-foreground: var(--headline-foreground);
   --color-headline-accent: var(--headline-accent);
   --color-primary-hover: var(--primary-hover);
+  --color-offer-border: var(--offer-border);
+  --color-offer-badge: var(--offer-badge);
+  --color-offer-badge-foreground: var(--offer-badge-foreground);
+  --color-price-old: var(--price-old);
+  --color-price: var(--price);
+  --color-savings: var(--savings);
+  --color-savings-foreground: var(--savings-foreground);
   --shadow-video: var(--shadow-video);
   --shadow-image: var(--shadow-image);
   --shadow-cover: var(--shadow-cover);
   --shadow-cta: var(--shadow-cta);
   --shadow-headline: var(--shadow-headline);
+  --shadow-offer: var(--shadow-offer);
 }
 
 :root {
@@ -110,11 +118,19 @@
   --headline-band: oklch(0.51 0.17 25);
   --headline-foreground: oklch(0.99 0.005 90);
   --headline-accent: oklch(0.91 0.12 142);
+  --offer-border: oklch(0.85 0.04 220);
+  --offer-badge: oklch(0.9 0.08 225);
+  --offer-badge-foreground: oklch(0.31 0.09 238);
+  --price-old: oklch(0.49 0.16 27);
+  --price: oklch(0.46 0.15 145);
+  --savings: oklch(0.92 0.07 145);
+  --savings-foreground: oklch(0.34 0.11 145);
   --shadow-video: 0 18px 45px color-mix(in oklab, var(--foreground) 16%, transparent);
   --shadow-image: 0 8px 24px color-mix(in oklab, var(--foreground) 10%, transparent);
   --shadow-cover: 0 24px 48px color-mix(in oklab, var(--foreground) 22%, transparent);
   --shadow-cta: 0 12px 28px color-mix(in oklab, var(--primary) 38%, transparent);
   --shadow-headline: 0 14px 30px color-mix(in oklab, var(--headline-band) 22%, transparent);
+  --shadow-offer: 0 20px 55px color-mix(in oklab, var(--foreground) 13%, transparent);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -173,6 +189,42 @@
     --headline-band: oklch(0.51 0.17 25);
     --headline-foreground: oklch(0.99 0.005 90);
     --headline-accent: oklch(0.91 0.12 142);
+    --offer-border: oklch(0.85 0.04 220);
+    --offer-badge: oklch(0.9 0.08 225);
+    --offer-badge-foreground: oklch(0.31 0.09 238);
+    --price-old: oklch(0.49 0.16 27);
+    --price: oklch(0.46 0.15 145);
+    --savings: oklch(0.92 0.07 145);
+    --savings-foreground: oklch(0.34 0.11 145);
+  }
+}
+
+@utility offer-cta {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: -35%;
+    width: 22%;
+    z-index: -1;
+    transform: skewX(-18deg);
+    background: color-mix(in oklab, var(--primary-foreground) 42%, transparent);
+    animation: offer-cta-shine 3.4s ease-in-out infinite;
+  }
+}
+
+@keyframes offer-cta-shine {
+  0%,
+  58% {
+    left: -35%;
+  }
+
+  82%,
+  100% {
+    left: 120%;
   }
 }
 
@@ -221,6 +273,10 @@
   }
 
   .carousel-cue span {
+    animation: none;
+  }
+
+  .offer-cta::after {
     animation: none;
   }
 }
