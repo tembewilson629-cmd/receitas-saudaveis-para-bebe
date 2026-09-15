@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type MouseEvent } from "react";
+import { useState } from "react";
 import offerCover from "../assets/file_00000000898c8211bbac3c406716fa09.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -94,16 +94,7 @@ function MiniVsl() {
 function Index() {
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 
-  const handleCheckoutClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-
-    if (isCheckoutLoading) return;
-
-    setIsCheckoutLoading(true);
-    window.setTimeout(() => {
-      window.location.assign("https://checkout.escalepay.com/5515180");
-    }, 350);
-  };
+  const handleCheckoutClick = () => setIsCheckoutLoading(true);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
