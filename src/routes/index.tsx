@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import offerCover from "../assets/file_00000000898c8211bbac3c406716fa09.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -50,6 +51,46 @@ const guideContents = [
   "Pratinhos adaptados para bebés no início da mastigação",
 ];
 
+function MiniVsl() {
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  return (
+    <div className="aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
+      {shouldLoadVideo ? (
+        <iframe
+          className="h-full w-full border-0"
+          src="https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?autoplay=1&rel=0"
+          title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      ) : (
+        <button
+          className="group relative h-full w-full cursor-pointer overflow-hidden bg-video"
+          type="button"
+          aria-label="Reproduzir vídeo de apresentação do guia"
+          onClick={() => setShouldLoadVideo(true)}
+        >
+          <img
+            className="h-full w-full object-cover"
+            src="https://i.ytimg.com/vi/aiR9Xm3Bgrg/hqdefault.jpg"
+            alt="Pré-visualização do vídeo de apresentação do guia"
+            width={480}
+            height={360}
+            loading="lazy"
+            decoding="async"
+          />
+          <span className="absolute inset-0 bg-video-overlay transition-colors group-hover:bg-video-overlay-hover" aria-hidden="true" />
+          <span className="absolute left-1/2 top-1/2 flex size-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-cta transition-transform group-hover:scale-105" aria-hidden="true">
+            <span className="ml-1 block h-0 w-0 border-y-[13px] border-l-[21px] border-y-transparent border-l-current" />
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
+
 function Index() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -62,31 +103,24 @@ function Index() {
           src="https://www.facebook.com/tr?id=4083380155288045&ev=PageView&noscript=1"
         />
       </noscript>
-      <section className="px-5 pb-8 pt-10 sm:pt-14">
-        <h1 className="mx-auto max-w-3xl text-center text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
-          +100 Receitas <span className="text-health">Saudáveis</span> para Bebés
+      <section className="px-5 pb-9 pt-10 sm:pt-14">
+        <h1 className="mx-auto max-w-3xl rounded-lg bg-headline-band px-5 py-6 text-center text-4xl font-extrabold leading-tight text-headline-foreground shadow-headline sm:px-8 sm:py-7 sm:text-5xl lg:text-6xl">
+          +100 Receitas <span className="text-headline-accent">Saudáveis</span> para Bebés
         </h1>
       </section>
 
-      <section className="mx-auto max-w-sm px-5 pb-12 sm:max-w-md">
-        <p className="mb-4 text-center text-lg font-semibold">Veja o que você vai receber</p>
-        <div className="aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
-          <iframe
-            className="h-full w-full border-0"
-            src="https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?rel=0"
-            title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
+      <section className="border-y border-border bg-vsl-section px-5 py-14 sm:py-16">
+        <div className="mx-auto max-w-sm sm:max-w-md">
+          <p className="mb-7 text-center text-2xl font-extrabold leading-tight text-foreground sm:text-3xl">Veja o que você vai receber</p>
+          <MiniVsl />
         </div>
       </section>
 
-      <section className="border-y border-border bg-carousel py-10" aria-label="Páginas do e-book">
+      <section className="border-b border-border bg-carousel py-14 sm:py-16" aria-label="Páginas do e-book">
         <div className="mx-auto max-w-6xl">
-          <div className="px-5 pb-6 text-center">
+          <div className="px-5 pb-8 text-center">
             <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">As receitas na prática</h2>
-            <p className="mt-2 text-sm font-medium text-muted-foreground">Deslize para ver mais receitas →</p>
+            <p className="carousel-cue mx-auto mt-4 w-fit rounded-full bg-card px-4 py-2 text-sm font-bold text-primary shadow-image">Deslize para ver mais receitas <span aria-hidden="true">→</span></p>
           </div>
           <div className="carousel-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:gap-5">
             {carouselImages.map((image, index) => (

@@ -63,11 +63,18 @@
   --color-carousel: var(--carousel);
   --color-offer: var(--offer);
   --color-video: var(--video);
+  --color-video-overlay: var(--video-overlay);
+  --color-video-overlay-hover: var(--video-overlay-hover);
+  --color-vsl-section: var(--vsl-section);
+  --color-headline-band: var(--headline-band);
+  --color-headline-foreground: var(--headline-foreground);
+  --color-headline-accent: var(--headline-accent);
   --color-primary-hover: var(--primary-hover);
   --shadow-video: var(--shadow-video);
   --shadow-image: var(--shadow-image);
   --shadow-cover: var(--shadow-cover);
   --shadow-cta: var(--shadow-cta);
+  --shadow-headline: var(--shadow-headline);
 }
 
 :root {
@@ -97,10 +104,17 @@
   --carousel: oklch(0.95 0.035 230);
   --offer: oklch(0.955 0.035 220);
   --video: oklch(0.16 0.01 250);
+  --video-overlay: oklch(0.16 0.01 250 / 0.16);
+  --video-overlay-hover: oklch(0.16 0.01 250 / 0.08);
+  --vsl-section: oklch(0.975 0.025 222);
+  --headline-band: oklch(0.51 0.17 25);
+  --headline-foreground: oklch(0.99 0.005 90);
+  --headline-accent: oklch(0.91 0.12 142);
   --shadow-video: 0 18px 45px color-mix(in oklab, var(--foreground) 16%, transparent);
   --shadow-image: 0 8px 24px color-mix(in oklab, var(--foreground) 10%, transparent);
   --shadow-cover: 0 24px 48px color-mix(in oklab, var(--foreground) 22%, transparent);
   --shadow-cta: 0 12px 28px color-mix(in oklab, var(--primary) 38%, transparent);
+  --shadow-headline: 0 14px 30px color-mix(in oklab, var(--headline-band) 22%, transparent);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -153,6 +167,30 @@
     --carousel: oklch(0.95 0.035 230);
     --offer: oklch(0.955 0.035 220);
     --video: oklch(0.16 0.01 250);
+    --video-overlay: oklch(0.16 0.01 250 / 0.16);
+    --video-overlay-hover: oklch(0.16 0.01 250 / 0.08);
+    --vsl-section: oklch(0.975 0.025 222);
+    --headline-band: oklch(0.51 0.17 25);
+    --headline-foreground: oklch(0.99 0.005 90);
+    --headline-accent: oklch(0.91 0.12 142);
+  }
+}
+
+@utility carousel-cue {
+  & span {
+    display: inline-block;
+    animation: carousel-cue-move 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes carousel-cue-move {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(0.35rem);
   }
 }
 
@@ -180,5 +218,9 @@
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .carousel-cue span {
+    animation: none;
   }
 }
