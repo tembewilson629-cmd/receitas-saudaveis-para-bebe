@@ -1,25 +1,32 @@
-# Otimização visual e da Mini VSL
+# Oferta mobile e checkout com maior conversão
 
 ## Objetivo
-Acelerar a abertura da página e dar mais impacto à headline, à Mini VSL e ao carrossel, sem alterar textos, imagens, vídeo, checkout ou a estrutura aprovada.
+Melhorar a leitura, o conforto de toque e a força comercial da secção atual do produto, preservando a capa, as imagens, as cores principais, o estilo editorial e o checkout existente.
 
 ## Alterações
-1. **Headline**
-   - Aplicar uma base vermelha elegante, com cantos arredondados, contraste forte e espaçamento adequado.
-   - Preservar a headline e a tipografia atuais.
+1. **Experiência mobile**
+   - Ajustar espaçamentos, tamanhos de texto e áreas de toque para leitura confortável em telemóveis.
+   - Manter o botão largo, alto e fácil de tocar, sem sobreposições ou elementos pequenos.
+   - Garantir que a primeira tela continue direta e focada no conteúdo principal.
 
-2. **Mini VSL**
-   - Substituir o carregamento imediato do player por uma pré-visualização leve com botão de reprodução.
-   - Carregar o mesmo vídeo apenas quando estiver próximo da área visível ou quando o visitante tocar para reproduzir.
-   - Manter dimensões estáveis para evitar saltos durante o carregamento.
-   - Dar à secção um fundo suave, maior espaçamento e título com hierarquia reforçada.
+2. **Secção de oferta**
+   - Transformar a área atual num bloco de oferta visual próprio, sem mudar a ordem essencial do conteúdo.
+   - Adicionar o badge “OFERTA ESPECIAL”.
+   - Reforçar o benefício principal e organizar capa, descrição, benefícios, preço e botão numa hierarquia comercial mais clara.
+   - No mobile, manter uma sequência vertical limpa; em ecrãs maiores, preservar a composição lado a lado.
 
-3. **Carrossel**
-   - Reforçar o bloco visual existente com mais contraste e espaçamento.
-   - Destacar o título e tornar o indicador de deslize mais visível.
-   - Adicionar movimento discreto ao indicador, respeitando a preferência por animações reduzidas.
+3. **Preço e economia**
+   - Dar mais contraste ao preço antigo “250 MZN”, com risco evidente e posição acima da oferta.
+   - Apresentar “POR APENAS” como apoio e “175 MZN” como o maior destaque da precificação.
+   - Adicionar “Você economiza 75 MZN”.
+
+4. **Botão e transição para o checkout**
+   - Reforçar o botão “Adquirir o Guia” com brilho discreto e animação suave, respeitando redução de movimento.
+   - Ao tocar, mostrar imediatamente um pequeno indicador e o texto “Acessando checkout...”.
+   - Bloquear cliques repetidos durante a saída e encaminhar para o mesmo checkout atual.
 
 ## Verificação
-- Confirmar em mobile e desktop que a página abre antes do player, o vídeo continua correto e reproduz normalmente.
-- Confirmar cores, contraste, espaçamento, carrossel tátil e ausência de sobreposições.
-- Confirmar que textos, imagens e checkout permanecem inalterados.
+- Confirmar visual e legibilidade em mobile e desktop.
+- Confirmar que o feedback aparece ao tocar e que o checkout continua correto.
+- Confirmar ausência de cortes, sobreposições e deslocamento horizontal.
+- Confirmar que capa, imagens, cores principais, textos existentes e estilo editorial permanecem preservados.
