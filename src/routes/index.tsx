@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import offerCover from "../assets/file_00000000898c8211bbac3c406716fa09.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -94,7 +94,7 @@ function MiniVsl() {
 function Index() {
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 
-  const handleCheckoutClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleCheckoutClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
 
     if (isCheckoutLoading) return;
