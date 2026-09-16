@@ -148,10 +148,10 @@ function Index() {
         </div>
       </section>
 
-      <section className="bg-offer px-4 py-12 sm:px-6 sm:py-20">
-        <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-lg border border-offer-border bg-card px-5 py-7 shadow-offer sm:px-8 sm:py-10 md:grid-cols-[minmax(280px,0.85fr)_minmax(0,1fr)] md:gap-14 lg:px-12">
+      <section className="bg-offer px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mx-auto grid max-w-5xl items-center gap-6 rounded-lg border border-offer-border bg-card px-4 py-5 shadow-offer sm:px-6 sm:py-7 md:grid-cols-[minmax(220px,0.72fr)_minmax(0,1fr)] md:gap-8 lg:px-8">
           <img
-            className="mx-auto h-auto w-full max-w-xs rounded-lg shadow-cover sm:max-w-sm"
+            className="mx-auto h-auto w-full max-w-60 rounded-lg shadow-cover sm:max-w-68 md:max-w-64 lg:max-w-72"
             src={offerCover.url}
             alt="Capa do guia Sabores que Crescem"
             width={768}
@@ -161,33 +161,33 @@ function Index() {
           />
 
           <div className="min-w-0">
-            <p className="mb-4 w-fit rounded-full bg-offer-badge px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-offer-badge-foreground">
+            <p className="mb-3 w-fit rounded-full bg-offer-badge px-3 py-1.5 text-xs font-extrabold uppercase tracking-wide text-offer-badge-foreground">
               Oferta especial
             </p>
-            <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">
+            <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl">
               +100 Receitas <span className="text-health">Saudáveis</span> para Bebés
             </h2>
-            <p className="mt-5 border-l-4 border-health pl-4 text-lg font-semibold leading-relaxed text-foreground">
+            <p className="mt-3 border-l-4 border-health pl-3 text-base font-semibold leading-relaxed text-foreground">
               Um guia completo com receitas para bebés dos 6 aos 24 meses. Dentro do guia:
             </p>
-            <ul className="mt-6 space-y-3.5">
+            <ul className="mt-4 space-y-2">
               {guideContents.map((item) => (
-                <li className="flex items-start gap-3 text-[1.0625rem] leading-relaxed" key={item}>
-                  <span className="mt-2 size-2 shrink-0 rounded-full bg-health" aria-hidden="true" />
+                <li className="flex items-start gap-2.5 text-base leading-snug" key={item}>
+                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-health" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-8 border-y border-offer-border py-6" aria-label="Preço promocional">
-              <p className="text-xl font-extrabold text-price-old line-through decoration-2">250 MZN</p>
-              <p className="mt-2 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">Por apenas</p>
-              <p className="mt-1 text-5xl font-black leading-none text-price sm:text-6xl">175 MZN</p>
-              <p className="mt-4 w-fit rounded-md bg-savings px-3 py-2 text-sm font-extrabold text-savings-foreground">
+            <div className="mt-5 border-y border-offer-border py-4" aria-label="Preço promocional">
+              <p className="text-lg font-extrabold text-price-old line-through decoration-2">250 MZN</p>
+              <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">Por apenas</p>
+              <p className="mt-1 text-4xl font-black leading-none text-price sm:text-5xl">175 MZN</p>
+              <p className="mt-3 w-fit rounded-md bg-savings px-3 py-1.5 text-sm font-extrabold text-savings-foreground">
                 Você economiza 75 MZN
               </p>
             </div>
             <a
-              className={`offer-cta mt-6 flex min-h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary px-6 py-4 text-center text-lg font-extrabold text-primary-foreground shadow-cta transition-all hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] md:min-w-72 ${isCheckoutLoading ? "pointer-events-none opacity-90" : ""}`}
+              className={`offer-cta mt-4 flex min-h-14 w-full items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary px-6 py-3.5 text-center text-lg font-extrabold text-primary-foreground shadow-cta transition-all hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] md:min-w-72 ${isCheckoutLoading ? "pointer-events-none opacity-90" : ""}`}
               href="https://checkout.escalepay.com/5515180"
               aria-busy={isCheckoutLoading}
               aria-disabled={isCheckoutLoading}

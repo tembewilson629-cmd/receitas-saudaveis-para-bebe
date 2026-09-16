@@ -166,39 +166,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: only light;
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.19 0.01 255);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.19 0.01 255);
-    --primary: oklch(0.65 0.14 236);
-    --primary-hover: oklch(0.57 0.15 238);
-    --primary-foreground: oklch(1 0 0);
-    --muted-foreground: oklch(0.43 0.015 250);
-    --border: oklch(0.91 0.01 238);
-    --ring: oklch(0.57 0.15 238);
-    --health: oklch(0.55 0.14 145);
-    --carousel: oklch(0.95 0.035 230);
-    --offer: oklch(0.955 0.035 220);
-    --video: oklch(0.16 0.01 250);
-    --video-overlay: oklch(0.16 0.01 250 / 0.16);
-    --video-overlay-hover: oklch(0.16 0.01 250 / 0.08);
-    --vsl-section: oklch(0.975 0.025 222);
-    --headline-band: oklch(0.51 0.17 25);
-    --headline-foreground: oklch(0.99 0.005 90);
-    --headline-accent: oklch(0.91 0.12 142);
-    --offer-border: oklch(0.85 0.04 220);
-    --offer-badge: oklch(0.9 0.08 225);
-    --offer-badge-foreground: oklch(0.31 0.09 238);
-    --price-old: oklch(0.49 0.16 27);
-    --price: oklch(0.46 0.15 145);
-    --savings: oklch(0.92 0.07 145);
-    --savings-foreground: oklch(0.34 0.11 145);
-  }
-}
-
 @utility offer-cta {
   position: relative;
   isolation: isolate;
