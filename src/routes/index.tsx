@@ -149,9 +149,9 @@ function Index() {
         </div>
       </section>
 
-      <section className="bg-offer px-4 py-7 sm:px-6 sm:py-10">
-        <div className="mx-auto grid max-w-5xl items-center gap-5 rounded-lg border border-offer-border bg-card p-4 shadow-offer sm:p-6 md:grid-cols-[minmax(220px,0.72fr)_minmax(0,1.28fr)] md:gap-7 lg:p-7">
-          <div className="relative mx-auto w-full max-w-64 rounded-lg border border-offer-border bg-cover-frame p-2 shadow-cover sm:max-w-68 md:max-w-64 lg:max-w-72">
+      <section className="bg-offer px-3 py-6 sm:px-6 sm:py-9">
+        <div className="mx-auto grid max-w-5xl grid-cols-[minmax(7.5rem,0.78fr)_minmax(0,1.22fr)] items-start gap-x-3 gap-y-3 rounded-lg border border-offer-border bg-card p-3 shadow-offer sm:grid-cols-[minmax(10rem,0.72fr)_minmax(0,1.28fr)] sm:gap-x-5 sm:p-5 md:grid-cols-[minmax(220px,0.72fr)_minmax(0,1.28fr)] md:gap-x-7 md:p-6 lg:p-7">
+          <div className="relative mx-auto w-full rounded-lg border border-offer-border bg-cover-frame p-1.5 shadow-cover sm:p-2 md:row-span-4 md:max-w-64 lg:max-w-72">
             <span className="absolute -left-2 -top-3 z-10 flex size-20 items-center justify-center rounded-full border-2 border-card bg-discount-badge px-2 text-center text-sm font-black leading-tight text-discount-badge-foreground shadow-image" aria-label="Mais de 100 receitas">
               +100<br />RECEITAS
             </span>
@@ -166,69 +166,70 @@ function Index() {
             />
           </div>
 
-          <div className="min-w-0">
-            <p className="mb-3 w-fit rounded-full bg-offer-badge px-3 py-1.5 text-xs font-extrabold uppercase tracking-wide text-offer-badge-foreground">
+          <div className="min-w-0 self-center md:self-start">
+            <p className="mb-2 w-fit rounded-full bg-offer-badge px-2.5 py-1 text-[0.68rem] font-extrabold uppercase tracking-wide text-offer-badge-foreground sm:px-3 sm:py-1.5 sm:text-xs">
               Oferta especial
             </p>
-            <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl">
+            <h2 className="text-xl font-extrabold leading-tight sm:text-3xl">
               +100 Receitas <span className="text-health">Saudáveis</span> para Bebés
             </h2>
-            <p className="mt-3 border-l-4 border-health pl-3 text-base font-semibold leading-relaxed text-foreground">
+            <p className="mt-2 border-l-4 border-health pl-2.5 text-sm font-semibold leading-snug text-foreground sm:mt-3 sm:pl-3 sm:text-base sm:leading-relaxed">
               Um guia completo com receitas para bebés dos 6 aos 24 meses. Dentro do guia:
             </p>
-            <ul className="mt-4 grid gap-x-4 gap-y-2 sm:grid-cols-2">
-              {guideContents.map((item) => (
-                <li className="flex items-start gap-2.5 text-base leading-snug" key={item}>
-                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-health text-xs font-black text-primary-foreground" aria-hidden="true">✓</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+          </div>
 
-            <div className="mt-5 grid grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-3 rounded-lg border border-bonus-border bg-bonus p-3 sm:grid-cols-[6.5rem_minmax(0,1fr)] sm:p-4">
-              <img
-                className="h-auto w-full rounded-md border border-bonus-border shadow-image"
-                src={bonusCover.url}
-                alt="Capa do mini guia O Bebé Recusa a Comida?"
-                width={144}
-                height={188}
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="min-w-0">
-                <p className="w-fit rounded-full bg-bonus-badge px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-bonus-badge-foreground">Bónus incluído</p>
-                <h3 className="mt-2 text-lg font-extrabold leading-tight">O Bebé Recusa a Comida?</h3>
-                <p className="mt-1 text-sm leading-snug text-muted-foreground">Mini guia com dicas práticas para lidar com a recusa alimentar.</p>
-                <p className="mt-2 w-fit rounded-md bg-savings px-2.5 py-1 text-sm font-extrabold text-savings-foreground">Grátis na sua compra!</p>
-              </div>
-            </div>
+          <ul className="col-span-2 grid grid-cols-2 gap-x-3 gap-y-1.5 md:col-span-1 md:col-start-2 md:gap-x-4 md:gap-y-2">
+            {guideContents.map((item) => (
+              <li className="flex items-start gap-2 text-sm leading-snug sm:text-base" key={item}>
+                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-health text-[0.65rem] font-black text-primary-foreground sm:size-5 sm:text-xs" aria-hidden="true">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
 
-            <div className="mt-5 grid items-end gap-4 border-t border-offer-border pt-4 sm:grid-cols-[auto_minmax(15rem,1fr)]" aria-label="Preço promocional">
-              <div>
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <p className="text-lg font-extrabold text-price-old line-through decoration-2">250 MZN</p>
-                  <p className="rounded-full bg-discount px-3 py-1 text-xs font-black text-discount-foreground">30% DE DESCONTO</p>
-                </div>
-                <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">Por apenas</p>
-                <p className="mt-1 text-4xl font-black leading-none text-price sm:text-5xl">175 MZN</p>
-              </div>
-              <a
-                className={`offer-cta flex min-h-14 w-full items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary px-6 py-3.5 text-center text-lg font-extrabold text-primary-foreground shadow-cta transition-all hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] ${isCheckoutLoading ? "pointer-events-none opacity-90" : ""}`}
-                href="https://checkout.escalepay.com/5515180"
-                aria-busy={isCheckoutLoading}
-                aria-disabled={isCheckoutLoading}
-                onClick={handleCheckoutClick}
-              >
-                {isCheckoutLoading ? (
-                  <>
-                    <span className="size-5 shrink-0 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" aria-hidden="true" />
-                    <span>Acessando checkout...</span>
-                  </>
-                ) : (
-                  "Adquirir o Guia →"
-                )}
-              </a>
+          <div className="col-span-2 grid grid-cols-[4.5rem_minmax(0,1fr)] items-center gap-3 border-y border-bonus-border bg-bonus px-2 py-2.5 sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:px-3 sm:py-3 md:col-span-1 md:col-start-2">
+            <img
+              className="h-auto w-full rounded-md border border-bonus-border shadow-image"
+              src={bonusCover.url}
+              alt="Capa do mini guia O Bebé Recusa a Comida?"
+              width={144}
+              height={188}
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="min-w-0">
+              <p className="w-fit rounded-full bg-bonus-badge px-2.5 py-1 text-[0.68rem] font-extrabold uppercase tracking-wide text-bonus-badge-foreground sm:px-3 sm:text-xs">🎁 Bónus incluído</p>
+              <h3 className="mt-1.5 text-base font-extrabold leading-tight sm:text-lg">O Bebé Recusa a Comida?</h3>
+              <p className="mt-1 text-xs leading-snug text-muted-foreground sm:text-sm">Mini guia de gestão comportamental infantil.</p>
+              <p className="mt-1.5 w-fit rounded-md bg-savings px-2 py-1 text-xs font-extrabold text-savings-foreground sm:text-sm">Grátis na sua compra!</p>
             </div>
+          </div>
+
+          <div className="col-span-2 grid items-end gap-3 border-t border-offer-border pt-3 sm:grid-cols-[auto_minmax(15rem,1fr)] md:col-span-1 md:col-start-2" aria-label="Preço promocional">
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <p className="text-lg font-extrabold text-price-old line-through decoration-2">250 MZN</p>
+                <p className="rounded-full bg-discount px-3 py-1 text-xs font-black text-discount-foreground">30% DE DESCONTO</p>
+              </div>
+              <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">Por apenas</p>
+              <p className="mt-1 text-4xl font-black leading-none text-price sm:text-5xl">175 MZN</p>
+            </div>
+            <a
+              className={`offer-cta flex min-h-14 w-full items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary px-6 py-3.5 text-center text-lg font-extrabold text-primary-foreground shadow-cta transition-all hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] ${isCheckoutLoading ? "pointer-events-none opacity-90" : ""}`}
+              href="https://checkout.escalepay.com/5515180"
+              aria-busy={isCheckoutLoading}
+              aria-disabled={isCheckoutLoading}
+              onClick={handleCheckoutClick}
+            >
+              {isCheckoutLoading ? (
+                <>
+                  <span className="size-5 shrink-0 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" aria-hidden="true" />
+                  <span>Acessando checkout...</span>
+                </>
+              ) : (
+                "Adquirir o Guia →"
+              )}
+            </a>
           </div>
         </div>
       </section>

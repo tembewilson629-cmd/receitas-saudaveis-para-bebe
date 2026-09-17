@@ -8,4 +8,4 @@
 - [x] Adicionar feedback imediato ao botão e verificar o checkout em mobile e desktop.
 - [x] Compactar a oferta principal mantendo duas colunas, ordem mobile e identidade visual fixa.
 - [x] Reorganizar a oferta principal com moldura da capa, bónus incluído, desconto e CTA preservado.
-- [ ] Adaptar a oferta principal no mobile à hierarquia compacta da referência.
+- [x] Adaptar a oferta principal no mobile à hierarquia compacta da referência.
