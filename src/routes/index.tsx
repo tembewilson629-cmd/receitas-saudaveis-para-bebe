@@ -95,25 +95,25 @@ function OfferCountdown() {
 }
 
 function MiniVsl() {
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
-      {shouldLoadVideo ? (
-        <iframe
-          className="h-full w-full border-0"
-          src="https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?autoplay=1&rel=0"
-          title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
-      ) : (
+    <div className="relative aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
+      {/* O player é pré-carregado em segundo plano (invisível) para abrir instantaneamente ao clicar */}
+      <iframe
+        className={`h-full w-full border-0 ${isPlaying ? "" : "invisible absolute inset-0"}`}
+        src={`https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?${isPlaying ? "autoplay=1&" : ""}rel=0`}
+        title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+      {!isPlaying && (
         <button
           className="group relative h-full w-full cursor-pointer overflow-hidden bg-video"
           type="button"
           aria-label="Reproduzir vídeo de apresentação do guia"
-          onClick={() => setShouldLoadVideo(true)}
+          onClick={() => setIsPlaying(true)}
         >
           <img
             className="h-full w-full object-cover"
