@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import offerCover from "../assets/file_00000000898c8211bbac3c406716fa09.png.asset.json";
 import bonusCover from "../assets/bonus-bebe-recusa-comida-v2.png.asset.json";
+import juditeTestimonial from "../assets/depoimento-judite.png.asset.json";
+import anaterciaTestimonial from "../assets/depoimento-anatercia.png.asset.json";
+import gildaTestimonial from "../assets/depoimento-gilda.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -51,6 +54,45 @@ const guideContents = [
   "Receitas de introdução alimentar",
   "Pratinhos adaptados para bebés no início da mastigação",
 ];
+
+const testimonials = [
+  { src: juditeTestimonial.url, alt: "Depoimento de cliente mostrando uma refeição preparada para o bebé" },
+  { src: anaterciaTestimonial.url, alt: "Depoimento de cliente mostrando uma receita preparada para o bebé" },
+  { src: gildaTestimonial.url, alt: "Depoimento de cliente sobre uma receita que o bebé adorou" },
+];
+
+const OFFER_DURATION_SECONDS = 3 * 60 * 60 + 27 * 60 + 16;
+
+function OfferCountdown() {
+  const [secondsLeft, setSecondsLeft] = useState(OFFER_DURATION_SECONDS);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setSecondsLeft((current) => (current <= 0 ? OFFER_DURATION_SECONDS : current - 1));
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const hours = Math.floor(secondsLeft / 3600);
+  const minutes = Math.floor((secondsLeft % 3600) / 60);
+  const seconds = secondsLeft % 60;
+  const timeParts = [hours, minutes, seconds].map((value) => String(value).padStart(2, "0"));
+
+  return (
+    <div className="flex items-center justify-between gap-3 border-t border-offer-border pt-2 sm:justify-start" aria-label={`A oferta termina em ${timeParts.join(":")}`}>
+      <p className="text-xs font-bold leading-tight text-muted-foreground sm:text-sm">A oferta termina em:</p>
+      <div className="flex items-center gap-1 font-black tabular-nums text-discount-foreground" aria-live="off">
+        {timeParts.map((part, index) => (
+          <span className="contents" key={index}>
+            {index > 0 && <span aria-hidden="true">:</span>}
+            <span className="min-w-8 rounded-md bg-discount px-1.5 py-1 text-center text-base sm:min-w-9 sm:text-lg">{part}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function MiniVsl() {
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
@@ -108,20 +150,20 @@ function Index() {
           src="https://www.facebook.com/tr?id=4083380155288045&ev=PageView&noscript=1"
         />
       </noscript>
-      <section className="px-5 pb-9 pt-10 sm:pt-14">
-        <h1 className="mx-auto max-w-3xl rounded-lg bg-headline-band px-5 py-6 text-center text-4xl font-extrabold leading-tight text-headline-foreground shadow-headline sm:px-8 sm:py-7 sm:text-5xl lg:text-6xl">
+      <section className="px-4 pb-4 pt-3 sm:pb-5 sm:pt-5">
+        <h1 className="mx-auto max-w-3xl rounded-lg bg-headline-band px-4 py-4 text-center text-3xl font-extrabold leading-tight text-headline-foreground shadow-headline sm:px-7 sm:py-5 sm:text-5xl lg:text-6xl">
           +100 Receitas <span className="text-headline-accent">Saudáveis</span> para Bebés
         </h1>
       </section>
 
-      <section className="border-y border-border bg-vsl-section px-5 py-14 sm:py-16">
-        <div className="mx-auto max-w-sm sm:max-w-md">
-          <p className="mb-7 text-center text-2xl font-extrabold leading-tight text-foreground sm:text-3xl">Veja o que você vai receber</p>
+      <section className="border-y border-border bg-vsl-section px-5 py-6 sm:py-8">
+        <div className="mx-auto max-w-60 sm:max-w-68">
+          <p className="mb-4 text-center text-xl font-extrabold leading-tight text-foreground sm:text-2xl">Veja o que você vai receber</p>
           <MiniVsl />
         </div>
       </section>
 
-      <section className="border-b border-border bg-carousel py-14 sm:py-16" aria-label="Páginas do e-book">
+      <section className="border-b border-border bg-carousel py-9 sm:py-12" aria-label="Páginas do e-book">
         <div className="mx-auto max-w-6xl">
           <div className="px-5 pb-8 text-center">
             <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">As receitas na prática</h2>
@@ -149,8 +191,38 @@ function Index() {
         </div>
       </section>
 
+      <section className="border-b border-border bg-background py-9 sm:py-12" aria-labelledby="social-proof-title">
+        <div className="mx-auto max-w-6xl">
+          <div className="px-5 pb-6 text-center">
+            <h2 id="social-proof-title" className="text-2xl font-extrabold leading-tight sm:text-3xl">Resultados de quem já experimentou</h2>
+          </div>
+          <div className="carousel-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:justify-center">
+            {testimonials.map((testimonial) => (
+              <figure className="w-[78vw] max-w-xs shrink-0 snap-center overflow-hidden rounded-lg border border-border bg-card shadow-image" key={testimonial.src}>
+                <img
+                  className="h-auto w-full"
+                  src={testimonial.src}
+                  alt={testimonial.alt}
+                  width={768}
+                  height={1365}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-offer px-3 py-6 sm:px-6 sm:py-9">
         <div className="mx-auto grid max-w-5xl grid-cols-[minmax(7.5rem,0.78fr)_minmax(0,1.22fr)] items-start gap-x-3 gap-y-3 rounded-lg border border-offer-border bg-card p-3 shadow-offer sm:grid-cols-[minmax(10rem,0.72fr)_minmax(0,1.28fr)] sm:gap-x-5 sm:p-5 md:grid-cols-[minmax(220px,0.72fr)_minmax(0,1.28fr)] md:gap-x-7 md:p-6 lg:p-7">
+          <div className="col-span-2 grid gap-2 rounded-md bg-offer px-3 py-2.5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-5">
+            <p className="w-fit rounded-full bg-offer-badge px-2.5 py-1 text-[0.68rem] font-extrabold uppercase tracking-wide text-offer-badge-foreground sm:px-3 sm:text-xs">
+              Oferta especial por tempo limitado
+            </p>
+            <OfferCountdown />
+          </div>
+
           <div className="relative mx-auto w-full rounded-lg border border-offer-border bg-cover-frame p-1.5 shadow-cover sm:p-2 md:row-span-4 md:max-w-64 lg:max-w-72">
             <span className="absolute -left-2 -top-3 z-10 flex size-20 items-center justify-center rounded-full border-2 border-card bg-discount-badge px-2 text-center text-sm font-black leading-tight text-discount-badge-foreground shadow-image" aria-label="Mais de 100 receitas">
               +100<br />RECEITAS
@@ -167,9 +239,6 @@ function Index() {
           </div>
 
           <div className="min-w-0 self-center md:self-start">
-            <p className="mb-2 w-fit rounded-full bg-offer-badge px-2.5 py-1 text-[0.68rem] font-extrabold uppercase tracking-wide text-offer-badge-foreground sm:px-3 sm:py-1.5 sm:text-xs">
-              Oferta especial
-            </p>
             <h2 className="text-xl font-extrabold leading-tight sm:text-3xl">
               +100 Receitas <span className="text-health">Saudáveis</span> para Bebés
             </h2>
@@ -205,17 +274,17 @@ function Index() {
             </div>
           </div>
 
-          <div className="col-span-2 grid items-end gap-3 border-t border-offer-border pt-3 sm:grid-cols-[auto_minmax(15rem,1fr)] md:col-span-1 md:col-start-2" aria-label="Preço promocional">
+          <div className="col-span-2 grid grid-cols-[auto_minmax(0,1fr)] items-end gap-3 border-t border-offer-border pt-3 md:col-span-1 md:col-start-2" aria-label="Preço promocional">
             <div>
-              <div className="flex flex-wrap items-center gap-2.5">
-                <p className="text-lg font-extrabold text-price-old line-through decoration-2">250 MZN</p>
-                <p className="rounded-full bg-discount px-3 py-1 text-xs font-black text-discount-foreground">30% DE DESCONTO</p>
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2.5">
+                <p className="text-base font-extrabold text-price-old line-through decoration-2 sm:text-lg">250 MZN</p>
+                <p className="rounded-full bg-discount px-2 py-1 text-[0.65rem] font-black text-discount-foreground sm:px-3 sm:text-xs">30% DE DESCONTO</p>
               </div>
-              <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">Por apenas</p>
-              <p className="mt-1 text-4xl font-black leading-none text-price sm:text-5xl">175 MZN</p>
+              <p className="mt-1 text-[0.68rem] font-extrabold uppercase tracking-wide text-muted-foreground sm:text-xs">Por apenas</p>
+              <p className="mt-0.5 whitespace-nowrap text-3xl font-black leading-none text-price sm:text-5xl">175 MZN</p>
             </div>
             <a
-              className={`offer-cta flex min-h-14 w-full items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary px-6 py-3.5 text-center text-lg font-extrabold text-primary-foreground shadow-cta transition-all hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] ${isCheckoutLoading ? "pointer-events-none opacity-90" : ""}`}
+              className={`offer-cta flex min-h-14 w-full items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-3 py-3 text-center text-sm font-extrabold text-primary-foreground shadow-cta transition-all hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] sm:px-6 sm:py-3.5 sm:text-lg ${isCheckoutLoading ? "pointer-events-none opacity-90" : ""}`}
               href="https://checkout.escalepay.com/5515180"
               aria-busy={isCheckoutLoading}
               aria-disabled={isCheckoutLoading}
