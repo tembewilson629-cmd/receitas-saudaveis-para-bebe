@@ -9,3 +9,8 @@
 - [x] Compactar a oferta principal mantendo duas colunas, ordem mobile e identidade visual fixa.
 - [x] Reorganizar a oferta principal com moldura da capa, bónus incluído, desconto e CTA preservado.
 - [x] Adaptar a oferta principal no mobile à hierarquia compacta da referência.
+- [ ] Compactar headline, primeira dobra e Mini VSL.
+- [ ] Adicionar urgência com contador reiniciável de 03:27:16.
+- [ ] Compactar preço e CTA mantendo a hierarquia visual.
+- [ ] Adicionar os três depoimentos enviados como prova social.
+- [ ] Verificar mobile e desktop sem alterar identidade ou checkout.
