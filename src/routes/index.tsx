@@ -24,7 +24,11 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      { rel: "preconnect", href: "https://www.youtube-nocookie.com" },
+      { rel: "preconnect", href: "https://i.ytimg.com" },
+    ],
     scripts: [
       {
         type: "text/javascript",
@@ -95,25 +99,25 @@ function OfferCountdown() {
 }
 
 function MiniVsl() {
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
-      {shouldLoadVideo ? (
-        <iframe
-          className="h-full w-full border-0"
-          src="https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?autoplay=1&rel=0"
-          title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
-      ) : (
+    <div className="relative aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
+      {/* O player é pré-carregado em segundo plano (invisível) para abrir instantaneamente ao clicar */}
+      <iframe
+        className={`h-full w-full border-0 ${isPlaying ? "" : "invisible absolute inset-0"}`}
+        src={`https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?${isPlaying ? "autoplay=1&" : ""}rel=0`}
+        title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+      {!isPlaying && (
         <button
           className="group relative h-full w-full cursor-pointer overflow-hidden bg-video"
           type="button"
           aria-label="Reproduzir vídeo de apresentação do guia"
-          onClick={() => setShouldLoadVideo(true)}
+          onClick={() => setIsPlaying(true)}
         >
           <img
             className="h-full w-full object-cover"
@@ -196,9 +200,9 @@ function Index() {
           <div className="px-5 pb-6 text-center">
             <h2 id="social-proof-title" className="text-2xl font-extrabold leading-tight sm:text-3xl">Resultados de quem já experimentou</h2>
           </div>
-          <div className="carousel-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:justify-center">
+          <div className="grid grid-cols-1 gap-4 px-5 pb-4 min-[420px]:grid-cols-2 sm:grid-cols-3 sm:gap-5">
             {testimonials.map((testimonial) => (
-              <figure className="w-[78vw] max-w-xs shrink-0 snap-center overflow-hidden rounded-lg border border-border bg-card shadow-image" key={testimonial.src}>
+              <figure className="mx-auto w-full max-w-xs overflow-hidden rounded-lg border border-border bg-card shadow-image" key={testimonial.src}>
                 <img
                   className="h-auto w-full"
                   src={testimonial.src}
