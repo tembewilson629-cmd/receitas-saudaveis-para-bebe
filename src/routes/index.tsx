@@ -5,6 +5,7 @@ import bonusCover from "../assets/bonus-bebe-recusa-comida-v2.png.asset.json";
 import juditeTestimonial from "../assets/depoimento-judite.png.asset.json";
 import anaterciaTestimonial from "../assets/depoimento-anatercia.png.asset.json";
 import gildaTestimonial from "../assets/depoimento-gilda.png.asset.json";
+import heroBanner from "../assets/receitas-saudaveis-banner.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -26,8 +27,8 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "/" },
-      { rel: "preconnect", href: "https://www.youtube-nocookie.com" },
       { rel: "preconnect", href: "https://i.ytimg.com" },
+      { rel: "preload", as: "image", href: heroBanner.url, fetchpriority: "high" },
     ],
     scripts: [
       {
@@ -103,16 +104,15 @@ function MiniVsl() {
 
   return (
     <div className="relative aspect-[9/16] overflow-hidden rounded-lg bg-video shadow-video">
-      {/* O player é pré-carregado em segundo plano (invisível) para abrir instantaneamente ao clicar */}
-      <iframe
-        className={`h-full w-full border-0 ${isPlaying ? "" : "invisible absolute inset-0"}`}
-        src={`https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?${isPlaying ? "autoplay=1&" : ""}rel=0`}
-        title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
-        loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      />
-      {!isPlaying && (
+      {isPlaying ? (
+        <iframe
+          className="h-full w-full border-0"
+          src="https://www.youtube-nocookie.com/embed/aiR9Xm3Bgrg?autoplay=1&rel=0"
+          title="Vídeo de apresentação do guia +100 Receitas Saudáveis para Bebés"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      ) : (
         <button
           className="group relative h-full w-full cursor-pointer overflow-hidden bg-video"
           type="button"
@@ -125,7 +125,8 @@ function MiniVsl() {
             alt="Pré-visualização do vídeo de apresentação do guia"
             width={480}
             height={360}
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
             decoding="async"
           />
           <span className="absolute inset-0 bg-video-overlay transition-colors group-hover:bg-video-overlay-hover" aria-hidden="true" />
@@ -154,29 +155,37 @@ function Index() {
           src="https://www.facebook.com/tr?id=4083380155288045&ev=PageView&noscript=1"
         />
       </noscript>
-      <section className="px-4 pb-4 pt-3 sm:pb-5 sm:pt-5">
-        <h1 className="mx-auto max-w-3xl rounded-lg bg-headline-band px-4 py-4 text-center text-3xl font-extrabold leading-tight text-headline-foreground shadow-headline sm:px-7 sm:py-5 sm:text-5xl lg:text-6xl">
-          +100 Receitas <span className="text-headline-accent">Saudáveis</span> para Bebés
-        </h1>
+      <section className="bg-background px-3 py-2 sm:px-5 sm:py-3" aria-label="+100 Receitas Saudáveis para Bebés">
+        <h1 className="sr-only">+100 Receitas Saudáveis para Bebés</h1>
+        <img
+          className="mx-auto block h-auto w-full max-w-6xl rounded-lg"
+          src={heroBanner.url}
+          alt="+100 Receitas Saudáveis para Bebés, com quatro sugestões de papas nutritivas"
+          width={1672}
+          height={941}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
       </section>
 
-      <section className="border-y border-border bg-vsl-section px-5 py-6 sm:py-8">
-        <div className="mx-auto max-w-60 sm:max-w-68">
-          <p className="mb-4 text-center text-xl font-extrabold leading-tight text-foreground sm:text-2xl">Veja o que você vai receber</p>
+      <section className="border-y border-border bg-vsl-section px-5 py-4 sm:py-6">
+        <div className="mx-auto max-w-52 sm:max-w-56">
+          <p className="mb-3 text-center text-lg font-extrabold leading-tight text-foreground sm:text-xl">Veja o que você vai receber</p>
           <MiniVsl />
         </div>
       </section>
 
-      <section className="border-b border-border bg-carousel py-9 sm:py-12" aria-label="Páginas do e-book">
+      <section className="border-b border-border bg-carousel py-6 sm:py-8" aria-label="Páginas do e-book">
         <div className="mx-auto max-w-6xl">
-          <div className="px-5 pb-8 text-center">
-            <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">As receitas na prática</h2>
-            <p className="carousel-cue mx-auto mt-4 w-fit rounded-full bg-card px-4 py-2 text-sm font-bold text-primary shadow-image">Deslize para ver mais receitas <span aria-hidden="true">→</span></p>
+          <div className="px-5 pb-4 text-center sm:pb-5">
+            <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl">As receitas na prática</h2>
+            <p className="carousel-cue mx-auto mt-2.5 w-fit rounded-full bg-card px-3 py-1.5 text-xs font-bold text-primary shadow-image sm:text-sm">Deslize para ver mais receitas <span aria-hidden="true">→</span></p>
           </div>
-          <div className="carousel-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:gap-5">
+          <div className="carousel-scroll flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-3 sm:gap-4">
             {carouselImages.map((image, index) => (
               <figure
-                className="w-[82vw] max-w-sm shrink-0 snap-center overflow-hidden rounded-lg bg-card shadow-image sm:w-80"
+                className="w-[62vw] max-w-60 shrink-0 snap-start overflow-hidden rounded-lg bg-card shadow-image sm:w-64"
                 key={image.src}
               >
                 <img
@@ -185,8 +194,8 @@ function Index() {
                   alt={image.alt}
                   width={768}
                   height={1280}
-                  loading={index < 2 ? "eager" : "lazy"}
-                  fetchPriority={index === 0 ? "high" : index === 1 ? "auto" : "low"}
+                  loading="lazy"
+                  fetchPriority={index === 0 ? "auto" : "low"}
                   decoding="async"
                 />
               </figure>
@@ -195,14 +204,14 @@ function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-background py-9 sm:py-12" aria-labelledby="social-proof-title">
+      <section className="border-b border-border bg-background py-6 sm:py-8" aria-labelledby="social-proof-title">
         <div className="mx-auto max-w-6xl">
-          <div className="px-5 pb-6 text-center">
+          <div className="px-5 pb-4 text-center sm:pb-5">
             <h2 id="social-proof-title" className="text-2xl font-extrabold leading-tight sm:text-3xl">Resultados de quem já experimentou</h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 px-5 pb-4 min-[420px]:grid-cols-2 sm:grid-cols-3 sm:gap-5">
+          <div className="carousel-scroll flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible">
             {testimonials.map((testimonial) => (
-              <figure className="mx-auto w-full max-w-xs overflow-hidden rounded-lg border border-border bg-card shadow-image" key={testimonial.src}>
+              <figure className="w-[68vw] max-w-64 shrink-0 snap-start overflow-hidden rounded-lg border border-border bg-card shadow-image sm:mx-auto sm:w-full" key={testimonial.src}>
                 <img
                   className="h-auto w-full"
                   src={testimonial.src}

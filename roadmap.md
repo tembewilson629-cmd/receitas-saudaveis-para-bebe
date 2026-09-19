@@ -14,3 +14,8 @@
 - [x] Compactar preço e CTA mantendo a hierarquia visual.
 - [x] Adicionar os três depoimentos enviados como prova social.
 - [x] Verificar mobile e desktop sem alterar identidade ou checkout.
+- [x] Substituir a headline pelo banner otimizado e prioritário.
+- [x] Carregar o vídeo apenas após interação, usando miniatura estática.
+- [x] Compactar a secção de receitas e mostrar a próxima imagem no mobile.
+- [x] Equilibrar receitas e depoimentos com navegação horizontal responsiva.
+- [ ] Validar banner, desempenho, cores e layout em 320 px, 469 px e desktop.
