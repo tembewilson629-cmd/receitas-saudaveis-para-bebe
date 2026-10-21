@@ -1,21 +1,8 @@
 # Roadmap
 
-- [x] Otimizar o carregamento da Mini VSL sem substituir o vídeo.
-- [x] Reforçar visualmente a headline, a secção da Mini VSL e o carrossel.
-- [x] Verificar a experiência mobile e desktop sem alterar conteúdo, imagens ou checkout.
-- [x] Melhorar leitura, espaçamento e áreas de toque em telemóveis.
-- [x] Transformar a secção do produto numa oferta com preço e economia destacados.
-- [x] Adicionar feedback imediato ao botão e verificar o checkout em mobile e desktop.
-- [x] Compactar a oferta principal mantendo duas colunas, ordem mobile e identidade visual fixa.
-- [x] Reorganizar a oferta principal com moldura da capa, bónus incluído, desconto e CTA preservado.
-- [x] Adaptar a oferta principal no mobile à hierarquia compacta da referência.
-- [x] Compactar headline, primeira dobra e Mini VSL.
-- [x] Adicionar urgência com contador reiniciável de 03:27:16.
-- [x] Compactar preço e CTA mantendo a hierarquia visual.
-- [x] Adicionar os três depoimentos enviados como prova social.
-- [x] Verificar mobile e desktop sem alterar identidade ou checkout.
-- [x] Substituir a headline pelo banner otimizado e prioritário.
-- [x] Carregar o vídeo apenas após interação, usando miniatura estática.
-- [x] Compactar a secção de receitas e mostrar a próxima imagem no mobile.
-- [x] Equilibrar receitas e depoimentos com navegação horizontal responsiva.
-- [ ] Validar banner, desempenho, cores e layout em 320 px, 469 px e desktop.
+- [x] Reescrever a landing page com a nova estrutura obrigatória (barra + temporizador, headline/intro, banner, vídeo, depoimentos, entrega, oferta, CTA final).
+- [x] Aplicar a nova paleta fixa (creme, rosa suave, castanho, botões rosa escuro) sem adaptação a modo escuro.
+- [x] Implementar temporizador de 10 minutos com persistência no navegador.
+- [x] Criar espaços reservados para banner principal, vídeo, imagem do produto e imagem do bónus.
+- [x] Manter checkout actual, pixel Meta e os três depoimentos reais já fornecidos.
+- [ ] Validar layout, temporizador, cores e botões em 320 px, 469 px e desktop.
