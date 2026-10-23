@@ -5,4 +5,4 @@
 - [x] Implementar temporizador de 10 minutos com persistência no navegador.
 - [x] Criar espaços reservados para banner principal, vídeo, imagem do produto e imagem do bónus.
 - [x] Manter checkout actual, pixel Meta e os três depoimentos reais já fornecidos.
-- [ ] Validar layout, temporizador, cores e botões em 320 px, 469 px e desktop.
+- [x] Validar layout, temporizador, cores e botões em 320 px, 469 px e desktop.
