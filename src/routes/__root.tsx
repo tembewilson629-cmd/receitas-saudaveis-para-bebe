@@ -78,11 +78,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "color-scheme", content: "only light" },
-      { title: "+100 Receitas Saudáveis para Bebés" },
-      { name: "description", content: "Guia de receitas saudáveis para bebés dos 6 aos 24 meses." },
+      { title: "Sabores que Crescem — 105 Receitas para Bebés dos 6 aos 24 meses" },
+      {
+        name: "description",
+        content:
+          "E-book com 105 receitas de alimentação infantil para bebés dos 6 aos 24 meses, com bónus sobre recusa alimentar.",
+      },
       { name: "author", content: "Sabores que Crescem" },
-      { property: "og:title", content: "+100 Receitas Saudáveis para Bebés" },
-      { property: "og:description", content: "Guia de receitas saudáveis para bebés dos 6 aos 24 meses." },
+      {
+        property: "og:title",
+        content: "Sabores que Crescem — 105 Receitas para Bebés dos 6 aos 24 meses",
+      },
+      {
+        property: "og:description",
+        content:
+          "E-book com 105 receitas de alimentação infantil para bebés dos 6 aos 24 meses, com bónus sobre recusa alimentar.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -102,7 +113,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt">
       <head>
         <HeadContent />
       </head>
