@@ -7,10 +7,14 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { lazy, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+
+// A API errorComponent do router exige um componente lazy; o render efectivo
+// vive em src/routes/root-error.tsx e mantém o mesmo comportamento.
+const ErrorComponent = lazy(() => import("./root-error"));
 
 function NotFoundComponent() {
   return (
