@@ -1,6 +1,5 @@
 @import "tailwindcss" source(none);
 @source "../src";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -45,6 +44,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-headline-accent: var(--headline-accent);
   --color-timer-bar: var(--timer-bar);
   --color-timer-value: var(--timer-value);
   --color-offer: var(--offer);
@@ -78,6 +78,7 @@
   --border: #E6DCCE;
   --input: #E6DCCE;
   --ring: #B85F70;
+  --headline-accent: #C0392B;
 
   --timer-bar: #302A28;
   --timer-value: #E8BFC4;

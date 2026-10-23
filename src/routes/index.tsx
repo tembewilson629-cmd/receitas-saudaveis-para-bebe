@@ -1,8 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import anaterciaTestimonial from "../assets/depoimento-anatercia.png.asset.json";
-import gildaTestimonial from "../assets/depoimento-gilda.png.asset.json";
-import juditeTestimonial from "../assets/depoimento-judite.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -74,19 +71,26 @@ const deliverySteps = [
   },
 ];
 
-// Depoimentos reais já fornecidos. Para adicionar ou remover, edite esta lista.
+// Depoimentos reais já fornecidos (WebP comprimido em public/depoimentos).
+// Para adicionar ou remover, edite esta lista.
 const testimonials = [
   {
-    src: juditeTestimonial.url,
+    src: "/depoimentos/depoimento-judite.webp",
     alt: "Depoimento real de cliente mostrando uma refeição preparada para o bebé",
+    width: 720,
+    height: 1279,
   },
   {
-    src: anaterciaTestimonial.url,
+    src: "/depoimentos/depoimento-anatercia.webp",
     alt: "Depoimento real de cliente mostrando uma receita preparada para o bebé",
+    width: 720,
+    height: 1279,
   },
   {
-    src: gildaTestimonial.url,
+    src: "/depoimentos/depoimento-gilda.webp",
     alt: "Depoimento real de cliente sobre uma receita que o bebé adorou",
+    width: 720,
+    height: 1090,
   },
 ];
 
@@ -208,7 +212,7 @@ function Index() {
             className="text-center text-3xl font-extrabold leading-tight sm:text-4xl"
           >
             {HEADLINE.split("as refeições do teu bebé")[0]}
-            <span className="text-primary">as refeições do teu bebé</span>.
+            <span className="text-headline-accent">as refeições do teu bebé</span>.
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-relaxed text-muted-foreground sm:text-lg">
             {INTRO}
@@ -259,8 +263,8 @@ function Index() {
                   className="h-auto w-full"
                   src={testimonial.src}
                   alt={testimonial.alt}
-                  width={768}
-                  height={1365}
+                  width={testimonial.width}
+                  height={testimonial.height}
                   loading="lazy"
                   decoding="async"
                 />
