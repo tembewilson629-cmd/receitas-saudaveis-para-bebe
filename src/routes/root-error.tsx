@@ -5,13 +5,15 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 // Componente de erro da rota raiz. Exportado com default para ser carregado
 // via React.lazy em __root.tsx (a API errorComponent do router exige lazy).
-export default function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+// O router entrega `error` como unknown; normalizamos para Error.
+export default function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
+  const normalizedError = error instanceof Error ? error : new Error(String(error));
+  console.error(normalizedError);
   const router = useRouter();
 
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
+    reportLovableError(normalizedError, { boundary: "tanstack_root_error_component" });
+  }, [normalizedError]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
