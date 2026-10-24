@@ -132,11 +132,54 @@
   }
 }
 
+/* Animação de entrada da secção de entrega: fade + subida em sequência,
+   com um "pop" suave no número de cada passo. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-visible:hover {
+  transform: translateY(-4px);
+}
+
+@keyframes step-badge-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.reveal-visible .step-badge {
+  animation: step-badge-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .reveal-visible .step-badge {
+    animation: none !important;
   }
 }
