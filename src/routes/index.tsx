@@ -146,18 +146,21 @@ function DeliveryStep({ step, index }: { step: (typeof deliverySteps)[number]; i
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
+    let timeout: number | undefined;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
           observer.disconnect();
-          const delay = window.setTimeout(() => setVisible(true), index * 140);
-          return () => window.clearTimeout(delay);
+          timeout = window.setTimeout(() => setVisible(true), index * 140);
         }
       },
       { threshold: 0.15 },
     );
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (timeout !== undefined) window.clearTimeout(timeout);
+    };
   }, [index]);
 
   return (
