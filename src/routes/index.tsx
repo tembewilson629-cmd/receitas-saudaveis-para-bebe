@@ -126,9 +126,9 @@ function OfferTimerBar() {
 
   return (
     <div className="sticky top-0 z-40 bg-timer-bar px-3 py-2">
-      <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-center text-xs font-semibold text-background/90 sm:text-sm">
+      <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-center text-xs font-semibold text-timer-text sm:text-sm">
         <span>{TIMER_LABEL}</span>
-        <span className="rounded-md bg-background/10 px-2 py-0.5 font-black tabular-nums text-timer-value">
+        <span className="rounded-md bg-background px-2 py-0.5 font-black tabular-nums text-timer-value">
           {secondsLeft === null ? formatTimer(TIMER_DURATION_SECONDS) : formatTimer(secondsLeft)}
         </span>
       </p>
