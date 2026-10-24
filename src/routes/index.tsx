@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -38,9 +38,10 @@ export const Route = createFileRoute("/")({
 
 const CHECKOUT_URL = "https://checkout.escalepay.com/5515180";
 
-// Temporizador da barra superior (em segundos). Persistido no navegador:
-// o mesmo visitante não recebe novos 10 minutos ao actualizar a página.
-const TIMER_DURATION_SECONDS = 10 * 60;
+// Temporizador da barra superior. Inicia em 9:47 (587 segundos) no momento em
+// que o visitante entra na página. Persistido no navegador: o mesmo visitante
+// não recebe tempo novo ao actualizar a página.
+const TIMER_DURATION_SECONDS = 9 * 60 + 47;
 const TIMER_STORAGE_KEY = "sqc-offer-timer-start";
 const TIMER_LABEL = "Esta oportunidade termina em:";
 
@@ -133,6 +134,51 @@ function OfferTimerBar() {
         </span>
       </p>
     </div>
+  );
+}
+
+// Passo da entrega: entra suavemente no ecrã (fade + subida), em sequência,
+// com um pequeno "pop" no número do passo. Respeita prefers-reduced-motion.
+function DeliveryStep({ step, index }: { step: (typeof deliverySteps)[number]; index: number }) {
+  const ref = useRef<HTMLLIElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    let timeout: number | undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          timeout = window.setTimeout(() => setVisible(true), index * 140);
+        }
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      if (timeout !== undefined) window.clearTimeout(timeout);
+    };
+  }, [index]);
+
+  return (
+    <li
+      ref={ref}
+      className={`reveal rounded-xl border border-border bg-card p-5 shadow-image ${visible ? "reveal-visible" : ""}`}
+    >
+      <span
+        className="step-badge flex size-9 items-center justify-center rounded-full bg-secondary text-base font-black text-secondary-foreground"
+        aria-hidden="true"
+      >
+        {index + 1}
+      </span>
+      <p className="mt-3 text-base font-extrabold">
+        Passo {index + 1} — {step.title}
+      </p>
+      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+    </li>
   );
 }
 
@@ -285,18 +331,7 @@ function Index() {
           </h2>
           <ol className="mt-8 grid gap-5 sm:grid-cols-3">
             {deliverySteps.map((step, index) => (
-              <li key={step.title} className="rounded-xl border border-border bg-card p-5 shadow-image">
-                <span
-                  className="flex size-9 items-center justify-center rounded-full bg-secondary text-base font-black text-secondary-foreground"
-                  aria-hidden="true"
-                >
-                  {index + 1}
-                </span>
-                <p className="mt-3 text-base font-extrabold">
-                  Passo {index + 1} — {step.title}
-                </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-              </li>
+              <DeliveryStep key={step.title} step={step} index={index} />
             ))}
           </ol>
         </div>
