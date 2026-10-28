@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
+import heroBanner from "@/assets/sabores-que-crescem-hero.webp.asset.json";
+
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
@@ -23,7 +25,11 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      // O banner é o maior elemento visível (LCP): pré-carregado com prioridade máxima.
+      { rel: "preload", as: "image", href: heroBanner.url, fetchPriority: "high" },
+    ],
     scripts: [
       {
         type: "text/javascript",
@@ -45,9 +51,6 @@ const TIMER_DURATION_SECONDS = 9 * 60 + 47;
 const TIMER_STORAGE_KEY = "sqc-offer-timer-start";
 const TIMER_LABEL = "Esta oportunidade termina em:";
 
-const HEADLINE = "Mãe, descobre novas formas de preparar as refeições do teu bebé.";
-const INTRO =
-  "O Sabores que Crescem reúne 105 receitas de alimentação infantil, organizadas por idade, para te ajudar a descobrir novas ideias de papinhas, sopinhas e refeições adaptadas à fase do teu bebé, dos 6 aos 24 meses.";
 
 const guideCategories = [
   "Papinhas leves",
@@ -169,7 +172,7 @@ function DeliveryStep({ step, index }: { step: (typeof deliverySteps)[number]; i
       className={`reveal rounded-xl border border-border bg-card p-5 shadow-image ${visible ? "reveal-visible" : ""}`}
     >
       <span
-        className="step-badge flex size-9 items-center justify-center rounded-full bg-secondary text-base font-black text-secondary-foreground"
+        className="step-badge flex size-9 items-center justify-center rounded-full bg-gold text-base font-black text-primary-foreground"
         aria-hidden="true"
       >
         {index + 1}
@@ -250,23 +253,22 @@ function Index() {
       {/* 1. Barra superior com temporizador */}
       <OfferTimerBar />
 
-      {/* 2. Headline, introdução e banner principal */}
-      <section className="px-5 pb-10 pt-10 sm:px-6 sm:pb-14 sm:pt-14" aria-labelledby="main-headline">
+      {/* 2. Secção de abertura: o banner ocupa a headline, a sub-headline e o banner principal */}
+      <section className="px-4 pb-10 pt-5 sm:px-6 sm:pb-14 sm:pt-8" aria-label="Apresentação do guia">
         <div className="mx-auto max-w-3xl">
-          <h1
-            id="main-headline"
-            className="text-center text-3xl font-extrabold leading-tight sm:text-4xl"
-          >
-            {HEADLINE.split("as refeições do teu bebé")[0]}
-            <span className="text-headline-accent">as refeições do teu bebé</span>.
+          {/* Headline em texto acessível a leitores de ecrã e motores de busca; visualmente o banner é a headline. */}
+          <h1 className="sr-only">
+            Sabores que Crescem — 105 receitas para bebés dos 6 aos 24 meses
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-relaxed text-muted-foreground sm:text-lg">
-            {INTRO}
-          </p>
-          {/* BANNER PRINCIPAL — substitua este bloco pela sua imagem (largura total, cantos arredondados) */}
-          <ImagePlaceholder
-            label="Banner principal — adicione a sua imagem aqui"
-            className="mx-auto mt-8 aspect-[16/9] w-full"
+          {/* BANNER PRINCIPAL — substitua o ficheiro em src/assets (asset.json) pela sua nova imagem */}
+          <img
+            src={heroBanner.url}
+            alt="Sabores que Crescem — 105 receitas para bebés, com exemplos de papinhas leves, papinhas grossas, saladas e comidas leves"
+            width={1122}
+            height={1402}
+            fetchPriority="high"
+            decoding="async"
+            className="mx-auto h-auto w-full rounded-2xl shadow-image"
           />
         </div>
       </section>
@@ -277,7 +279,7 @@ function Index() {
         aria-labelledby="video-title"
       >
         <div className="mx-auto max-w-3xl text-center">
-          <h2 id="video-title" className="text-2xl font-extrabold leading-tight sm:text-3xl">
+          <h2 id="video-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
             Vê o que vais encontrar dentro do Sabores que Crescem
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
@@ -295,7 +297,7 @@ function Index() {
       <section className="px-5 py-10 sm:px-6 sm:py-14" aria-labelledby="testimonials-title">
         <div className="mx-auto max-w-6xl">
           <div className="pb-6 text-center">
-            <h2 id="testimonials-title" className="text-2xl font-extrabold leading-tight sm:text-3xl">
+            <h2 id="testimonials-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
               O que dizem as mães que já conheceram o guia
             </h2>
           </div>
@@ -326,7 +328,7 @@ function Index() {
         aria-labelledby="delivery-title"
       >
         <div className="mx-auto max-w-3xl">
-          <h2 id="delivery-title" className="text-center text-2xl font-extrabold leading-tight sm:text-3xl">
+          <h2 id="delivery-title" className="text-center font-display text-2xl font-extrabold leading-tight sm:text-3xl">
             Como vais receber o teu e-book?
           </h2>
           <ol className="mt-8 grid gap-5 sm:grid-cols-3">
@@ -340,7 +342,7 @@ function Index() {
       {/* 6. Bloco principal de oferta */}
       <section className="px-4 py-10 sm:px-6 sm:py-14" aria-labelledby="offer-title">
         <div className="mx-auto max-w-4xl rounded-2xl border border-offer-border bg-card p-4 shadow-offer sm:p-7">
-          <h2 id="offer-title" className="text-center text-2xl font-extrabold leading-tight sm:text-3xl">
+          <h2 id="offer-title" className="text-center font-display text-2xl font-extrabold leading-tight sm:text-3xl">
             Tudo o que precisas para descobrir novas ideias para as refeições do teu bebé
           </h2>
 
@@ -362,7 +364,7 @@ function Index() {
                 {guideCategories.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm leading-snug sm:text-base">
                     <span
-                      className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-secondary text-[0.6rem] font-black text-secondary-foreground sm:size-5 sm:text-xs"
+                      className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-gold text-[0.6rem] font-black text-primary-foreground sm:size-5 sm:text-xs"
                       aria-hidden="true"
                     >
                       ✓
@@ -404,7 +406,7 @@ function Index() {
 
       {/* 7. Reforço final e chamada para acção */}
       <section className="border-t border-border bg-accent px-5 py-12 text-center sm:px-6 sm:py-16">
-        <h2 className="mx-auto max-w-2xl text-2xl font-extrabold leading-tight sm:text-3xl">
+        <h2 className="mx-auto max-w-2xl font-display text-2xl font-extrabold leading-tight sm:text-3xl">
           Descobre novas possibilidades para as refeições do teu bebé.
         </h2>
         <div className="mx-auto mt-6 max-w-lg">
