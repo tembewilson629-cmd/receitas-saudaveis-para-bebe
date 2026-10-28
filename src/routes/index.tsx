@@ -172,7 +172,7 @@ function DeliveryStep({ step, index }: { step: (typeof deliverySteps)[number]; i
       className={`reveal rounded-xl border border-border bg-card p-5 shadow-image ${visible ? "reveal-visible" : ""}`}
     >
       <span
-        className="step-badge flex size-9 items-center justify-center rounded-full bg-secondary text-base font-black text-secondary-foreground"
+        className="step-badge flex size-9 items-center justify-center rounded-full bg-gold text-base font-black text-secondary-foreground"
         aria-hidden="true"
       >
         {index + 1}
@@ -279,7 +279,7 @@ function Index() {
         aria-labelledby="video-title"
       >
         <div className="mx-auto max-w-3xl text-center">
-          <h2 id="video-title" className="text-2xl font-extrabold leading-tight sm:text-3xl">
+          <h2 id="video-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
             Vê o que vais encontrar dentro do Sabores que Crescem
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
@@ -297,7 +297,7 @@ function Index() {
       <section className="px-5 py-10 sm:px-6 sm:py-14" aria-labelledby="testimonials-title">
         <div className="mx-auto max-w-6xl">
           <div className="pb-6 text-center">
-            <h2 id="testimonials-title" className="text-2xl font-extrabold leading-tight sm:text-3xl">
+            <h2 id="testimonials-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
               O que dizem as mães que já conheceram o guia
             </h2>
           </div>
@@ -328,7 +328,7 @@ function Index() {
         aria-labelledby="delivery-title"
       >
         <div className="mx-auto max-w-3xl">
-          <h2 id="delivery-title" className="text-center text-2xl font-extrabold leading-tight sm:text-3xl">
+          <h2 id="delivery-title" className="text-center font-display text-2xl font-extrabold leading-tight sm:text-3xl">
             Como vais receber o teu e-book?
           </h2>
           <ol className="mt-8 grid gap-5 sm:grid-cols-3">
@@ -342,7 +342,7 @@ function Index() {
       {/* 6. Bloco principal de oferta */}
       <section className="px-4 py-10 sm:px-6 sm:py-14" aria-labelledby="offer-title">
         <div className="mx-auto max-w-4xl rounded-2xl border border-offer-border bg-card p-4 shadow-offer sm:p-7">
-          <h2 id="offer-title" className="text-center text-2xl font-extrabold leading-tight sm:text-3xl">
+          <h2 id="offer-title" className="text-center font-display text-2xl font-extrabold leading-tight sm:text-3xl">
             Tudo o que precisas para descobrir novas ideias para as refeições do teu bebé
           </h2>
 
@@ -364,7 +364,7 @@ function Index() {
                 {guideCategories.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm leading-snug sm:text-base">
                     <span
-                      className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-secondary text-[0.6rem] font-black text-secondary-foreground sm:size-5 sm:text-xs"
+                      className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-gold text-[0.6rem] font-black text-primary-foreground sm:size-5 sm:text-xs"
                       aria-hidden="true"
                     >
                       ✓
@@ -406,7 +406,7 @@ function Index() {
 
       {/* 7. Reforço final e chamada para acção */}
       <section className="border-t border-border bg-accent px-5 py-12 text-center sm:px-6 sm:py-16">
-        <h2 className="mx-auto max-w-2xl text-2xl font-extrabold leading-tight sm:text-3xl">
+        <h2 className="mx-auto max-w-2xl font-display text-2xl font-extrabold leading-tight sm:text-3xl">
           Descobre novas possibilidades para as refeições do teu bebé.
         </h2>
         <div className="mx-auto mt-6 max-w-lg">
