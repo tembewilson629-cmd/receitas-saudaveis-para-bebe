@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
     links: [
       { rel: "canonical", href: "/" },
       // O banner é o maior elemento visível (LCP): pré-carregado com prioridade máxima.
-      { rel: "preload", as: "image", href: heroBanner.url, fetchpriority: "high" },
+      { rel: "preload", as: "image", href: heroBanner.url, fetchPriority: "high" },
     ],
     scripts: [
       {
