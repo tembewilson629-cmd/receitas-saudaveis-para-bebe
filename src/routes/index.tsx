@@ -172,7 +172,7 @@ function DeliveryStep({ step, index }: { step: (typeof deliverySteps)[number]; i
       className={`reveal rounded-xl border border-border bg-card p-5 shadow-image ${visible ? "reveal-visible" : ""}`}
     >
       <span
-        className="step-badge flex size-9 items-center justify-center rounded-full bg-gold text-base font-black text-secondary-foreground"
+        className="step-badge flex size-9 items-center justify-center rounded-full bg-gold text-base font-black text-primary-foreground"
         aria-hidden="true"
       >
         {index + 1}
