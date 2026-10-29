@@ -1,23 +1,23 @@
 @import "tailwindcss" source(none);
 @source "../src";
 
-@custom-variant dark (&:is(.dark *));
-
 /*
  * Design system — Sabores que Crescem.
  *
- * Identidade retirada do banner principal (tema sempre claro, sem
- * adaptação a prefers-color-scheme):
- *   Fundo creme:            #F6EBDA
- *   Creme mais claro (cartões): #FDF9F0
- *   Vinho (botões, destaques, barra): #7C0D2B
- *   Rosa suave dos cartões do banner: #F3D3D6
- *   Dourado (detalhes):     #B08A3E
- *   Texto quase-preto:      #1F1A15
- *   Texto secundário:       #5C5145
+ * PALETA OFICIAL (única fonte de verdade — apenas HEX, sem oklch, color-mix,
+ * rgba sobre fundos ou cores do sistema; nada varia entre navegadores):
+ *   Fundo principal:            #F6EDE0
+ *   Fundo secundário/cartões:   #F2E6D3
+ *   Texto principal:            #1A1A1A
+ *   Texto secundário:           #4A3F3A
+ *   Bordô (CTA, barra, títulos):#7C0F2E
+ *   Texto de botões/barra:      #FFFFFF
+ *   Dourado (detalhes):         #B8924A
+ *   Etiquetas/badges (rosa):    #C85A72
+ *   Bordas e divisórias:        #E3D3BA
  *
- * Todos os tokens são definidos uma única vez em :root e registados
- * em @theme inline (ex.: --color-primary -> bg-primary, text-primary).
+ * Modo escuro desativado: não existe variante dark, @media
+ * prefers-color-scheme ou cor dependente do navegador.
  */
 
 @theme inline {
@@ -55,6 +55,10 @@
   --color-timer-value: var(--timer-value);
   --color-offer: var(--offer);
   --color-offer-border: var(--offer-border);
+  --color-placeholder-border: var(--placeholder-border);
+  --color-placeholder-bg: var(--placeholder-bg);
+  --color-bonus-bg: var(--bonus-bg);
+  --color-spinner-track: var(--spinner-track);
   --shadow-image: var(--shadow-image);
   --shadow-offer: var(--shadow-offer);
   --shadow-cta: var(--shadow-cta);
@@ -62,61 +66,108 @@
 
 :root {
   color-scheme: only light;
+
   --radius: 0.75rem;
 
-  --background: #F6EBDA;
-  --foreground: #1F1A15;
-  --card: #FDF9F0;
-  --card-foreground: #1F1A15;
-  --popover: #FDF9F0;
-  --popover-foreground: #1F1A15;
-  --primary: #7C0D2B;
-  --primary-hover: #630A22;
-  --primary-foreground: #FFF7EC;
-  --secondary: #F3D3D6;
-  --secondary-foreground: #7C0D2B;
-  --muted: #EFE3CE;
-  --muted-foreground: #5C5145;
-  --accent: #F1E4CC;
-  --accent-foreground: #1F1A15;
-  --destructive: #B3402F;
+  /* Paleta oficial */
+  --background: #F6EDE0;
+  --foreground: #1A1A1A;
+  --card: #F2E6D3;
+  --card-foreground: #1A1A1A;
+  --popover: #F2E6D3;
+  --popover-foreground: #1A1A1A;
+  --primary: #7C0F2E;
+  --primary-hover: #650B24;
+  --primary-foreground: #FFFFFF;
+  --secondary: #C85A72;
+  --secondary-foreground: #FFFFFF;
+  --muted: #F2E6D3;
+  --muted-foreground: #4A3F3A;
+  --accent: #F2E6D3;
+  --accent-foreground: #1A1A1A;
+  --destructive: #7C0F2E;
   --destructive-foreground: #FFFFFF;
-  --gold: #B08A3E;
-  --border: #E3D3B8;
-  --input: #E3D3B8;
-  --ring: #7C0D2B;
-  --headline-accent: #7C0D2B;
+  --gold: #B8924A;
+  --border: #E3D3BA;
+  --input: #E3D3BA;
+  --ring: #7C0F2E;
+  --headline-accent: #7C0F2E;
 
-  --timer-bar: #7C0D2B;
-  --timer-text: #F8EFE0;
-  --timer-value: #7C0D2B;
-  --offer: #FDF9F0;
-  --offer-border: #E3D3B8;
+  --timer-bar: #7C0F2E;
+  --timer-text: #FFFFFF;
+  --timer-value: #7C0F2E;
+  --offer: #F2E6D3;
+  --offer-border: #E3D3BA;
 
-  --shadow-image: 0 10px 28px rgb(80 55 25 / 0.14);
-  --shadow-offer: 0 22px 55px rgb(80 55 25 / 0.16);
-  --shadow-cta: 0 12px 26px rgb(124 13 43 / 0.35);
+  /* Tons sólidos finais (hex) que substituem transparências sobre fundos */
+  --placeholder-border: #C59499;
+  --placeholder-bg: #EAC8C4;
+  --bonus-bg: #E5BCB7;
+  --spinner-track: #B06F82;
+
+  --shadow-image: 0 10px 28px rgb(74 63 58 / 0.14);
+  --shadow-offer: 0 22px 55px rgb(74 63 58 / 0.16);
+  --shadow-cta: 0 12px 26px rgb(124 15 46 / 0.35);
 }
 
 @layer base {
-  html {
+  html,
+  body {
     color-scheme: only light;
     background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 
   * {
     border-color: var(--color-border);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    forced-color-adjust: none;
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
     font-family: "Nunito Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     margin: 0;
     min-width: 320px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Controlos nativos: nunca usar estilos do navegador */
+  button,
+  input,
+  select,
+  textarea {
+    appearance: none;
+    background-color: var(--color-card);
+    color: var(--color-foreground);
+    border-color: var(--color-border);
+    font: inherit;
+  }
+
+  input,
+  select,
+  textarea {
+    -webkit-text-fill-color: var(--color-foreground);
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-text-fill-color: var(--color-foreground);
+    -webkit-box-shadow: 0 0 0 1000px var(--color-card) inset;
+    caret-color: var(--color-foreground);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button {
+    -webkit-text-fill-color: currentColor;
   }
 }
 
