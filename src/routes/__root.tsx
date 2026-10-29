@@ -44,6 +44,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "color-scheme", content: "only light" },
+      { name: "supported-color-schemes", content: "light" },
+      { name: "theme-color", content: "#7C0F2E" },
       { title: "Sabores que Crescem — 105 Receitas para Bebés dos 6 aos 24 meses" },
       {
         name: "description",

@@ -188,7 +188,7 @@ function DeliveryStep({ step, index }: { step: (typeof deliverySteps)[number]; i
 function ImagePlaceholder({ label, className }: { label: string; className?: string }) {
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border-2 border-dashed border-primary/40 bg-secondary/25 px-4 text-center ${className ?? ""}`}
+      className={`flex flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border-2 border-dashed border-placeholder-border bg-placeholder-bg px-4 text-center ${className ?? ""}`}
     >
       <span className="text-xs font-semibold text-muted-foreground sm:text-sm">{label}</span>
     </div>
@@ -197,7 +197,7 @@ function ImagePlaceholder({ label, className }: { label: string; className?: str
 
 function VideoPlaceholder() {
   return (
-    <div className="relative mx-auto flex aspect-[9/16] w-full max-w-64 flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border-2 border-dashed border-primary/40 bg-secondary/25 px-4 text-center sm:max-w-72">
+    <div className="relative mx-auto flex aspect-[9/16] w-full max-w-64 flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border-2 border-dashed border-placeholder-border bg-placeholder-bg px-4 text-center sm:max-w-72">
       <span
         className="flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-cta"
         aria-hidden="true"
@@ -225,7 +225,7 @@ function CheckoutButton({ label, className }: { label: string; className?: strin
       {isLoading ? (
         <>
           <span
-            className="size-5 shrink-0 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground"
+            className="size-5 shrink-0 animate-spin rounded-full border-2 border-spinner-track border-t-primary-foreground"
             aria-hidden="true"
           />
           <span>Acessando checkout...</span>
@@ -377,7 +377,7 @@ function Index() {
           </div>
 
           {/* BÓNUS INCLUÍDO */}
-          <div className="mt-7 grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-3 rounded-xl border border-offer-border bg-secondary/30 p-3 sm:grid-cols-[7rem_minmax(0,1fr)] sm:p-4">
+          <div className="mt-7 grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-3 rounded-xl border border-offer-border bg-bonus-bg p-3 sm:grid-cols-[7rem_minmax(0,1fr)] sm:p-4">
             {/* IMAGEM DO BÓNUS — substitua este bloco pela sua imagem */}
             <ImagePlaceholder label="Imagem do bónus" className="aspect-[3/4] w-full" />
             <div className="min-w-0">
