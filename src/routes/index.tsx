@@ -264,21 +264,21 @@ function Index() {
         </div>
       </section>
 
-      {/* 5. Como o cliente recebe o produto */}
-      <section
-        className="border-y border-border bg-accent px-5 py-10 sm:px-6 sm:py-14"
-        aria-labelledby="delivery-title"
-      >
-        <div className="mx-auto max-w-3xl">
-          <h2 id="delivery-title" className="text-center font-display text-2xl font-extrabold leading-tight sm:text-3xl">
-            Como vais receber o teu e-book?
-          </h2>
-          <ol className="mt-8 grid gap-5 sm:grid-cols-3">
-            {deliverySteps.map((step, index) => (
-              <DeliveryStep key={step.title} step={step} index={index} />
-            ))}
-          </ol>
-        </div>
+      {/* 5. Como o cliente recebe o produto — banner completo (substitui os passos em texto) */}
+      <section aria-labelledby="delivery-title">
+        <h2 id="delivery-title" className="sr-only">
+          Como vais receber o teu e-book?
+        </h2>
+        {/* BANNER DA ENTREGA — substitua o ficheiro em src/assets (asset.json) pela sua nova imagem */}
+        <img
+          src={deliveryBanner.url}
+          alt="Como vais receber o teu e-book — é simples, rápido e seguro: 1. Faz a tua compra, preenchendo os dados no checkout; 2. Efectua o pagamento, escolhendo o método disponível; 3. Recebe o teu e-book por e-mail após a confirmação do pagamento, com o WhatsApp como apoio quando configurado"
+          width={1671}
+          height={941}
+          loading="lazy"
+          decoding="async"
+          className="block h-auto w-full"
+        />
       </section>
 
       {/* 6. Bloco principal de oferta */}
