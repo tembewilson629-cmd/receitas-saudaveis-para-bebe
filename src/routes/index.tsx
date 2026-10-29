@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import heroBanner from "@/assets/sabores-que-crescem-hero.webp.asset.json";
+import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -60,20 +61,6 @@ const guideCategories = [
   "Pratinhos adaptados à mesa da família",
 ];
 
-const deliverySteps = [
-  {
-    title: "Faz a tua compra",
-    text: "Acede ao checkout e preenche os dados solicitados.",
-  },
-  {
-    title: "Efectua o pagamento",
-    text: "Escolhe um dos métodos de pagamento disponíveis no checkout.",
-  },
-  {
-    title: "Recebe o teu e-book",
-    text: "Após a confirmação do pagamento, recebes o acesso ao e-book por e-mail. O WhatsApp pode ser utilizado como apoio à entrega, quando configurado.",
-  },
-];
 
 // Depoimentos reais já fornecidos (WebP comprimido em public/depoimentos).
 // Para adicionar ou remover, edite esta lista.
@@ -140,50 +127,6 @@ function OfferTimerBar() {
   );
 }
 
-// Passo da entrega: entra suavemente no ecrã (fade + subida), em sequência,
-// com um pequeno "pop" no número do passo. Respeita prefers-reduced-motion.
-function DeliveryStep({ step, index }: { step: (typeof deliverySteps)[number]; index: number }) {
-  const ref = useRef<HTMLLIElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    let timeout: number | undefined;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          observer.disconnect();
-          timeout = window.setTimeout(() => setVisible(true), index * 140);
-        }
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(element);
-    return () => {
-      observer.disconnect();
-      if (timeout !== undefined) window.clearTimeout(timeout);
-    };
-  }, [index]);
-
-  return (
-    <li
-      ref={ref}
-      className={`reveal rounded-xl border border-border bg-card p-5 shadow-image ${visible ? "reveal-visible" : ""}`}
-    >
-      <span
-        className="step-badge flex size-9 items-center justify-center rounded-full bg-gold text-base font-black text-primary-foreground"
-        aria-hidden="true"
-      >
-        {index + 1}
-      </span>
-      <p className="mt-3 text-base font-extrabold">
-        Passo {index + 1} — {step.title}
-      </p>
-      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-    </li>
-  );
-}
 
 function ImagePlaceholder({ label, className }: { label: string; className?: string }) {
   return (
@@ -253,24 +196,23 @@ function Index() {
       {/* 1. Barra superior com temporizador */}
       <OfferTimerBar />
 
-      {/* 2. Secção de abertura: o banner ocupa a headline, a sub-headline e o banner principal */}
-      <section className="px-4 pb-10 pt-5 sm:px-6 sm:pb-14 sm:pt-8" aria-label="Apresentação do guia">
-        <div className="mx-auto max-w-3xl">
-          {/* Headline em texto acessível a leitores de ecrã e motores de busca; visualmente o banner é a headline. */}
-          <h1 className="sr-only">
-            Sabores que Crescem — 105 receitas para bebés dos 6 aos 24 meses
-          </h1>
-          {/* BANNER PRINCIPAL — substitua o ficheiro em src/assets (asset.json) pela sua nova imagem */}
-          <img
-            src={heroBanner.url}
-            alt="Sabores que Crescem — 105 receitas para bebés, com exemplos de papinhas leves, papinhas grossas, saladas e comidas leves"
-            width={1122}
-            height={1402}
-            fetchPriority="high"
-            decoding="async"
-            className="mx-auto h-auto w-full rounded-2xl shadow-image"
-          />
-        </div>
+      {/* 2. Secção de abertura: o banner ocupa a headline, a sub-headline e o banner principal,
+          atingindo as bordas laterais da página (sem espaços às lados). */}
+      <section className="pb-10 pt-2 sm:pb-14" aria-label="Apresentação do guia">
+        {/* Headline em texto acessível a leitores de ecrã e motores de busca; visualmente o banner é a headline. */}
+        <h1 className="sr-only">
+          Sabores que Crescem — 105 receitas para bebés dos 6 aos 24 meses
+        </h1>
+        {/* BANNER PRINCIPAL — substitua o ficheiro em src/assets (asset.json) pela sua nova imagem */}
+        <img
+          src={heroBanner.url}
+          alt="Sabores que Crescem — 105 receitas para bebés, com exemplos de papinhas leves, papinhas grossas, saladas e comidas leves"
+          width={1122}
+          height={1402}
+          fetchPriority="high"
+          decoding="async"
+          className="block h-auto w-full"
+        />
       </section>
 
       {/* 3. Vídeo explicativo */}
@@ -322,21 +264,21 @@ function Index() {
         </div>
       </section>
 
-      {/* 5. Como o cliente recebe o produto */}
-      <section
-        className="border-y border-border bg-accent px-5 py-10 sm:px-6 sm:py-14"
-        aria-labelledby="delivery-title"
-      >
-        <div className="mx-auto max-w-3xl">
-          <h2 id="delivery-title" className="text-center font-display text-2xl font-extrabold leading-tight sm:text-3xl">
-            Como vais receber o teu e-book?
-          </h2>
-          <ol className="mt-8 grid gap-5 sm:grid-cols-3">
-            {deliverySteps.map((step, index) => (
-              <DeliveryStep key={step.title} step={step} index={index} />
-            ))}
-          </ol>
-        </div>
+      {/* 5. Como o cliente recebe o produto — banner completo (substitui os passos em texto) */}
+      <section aria-labelledby="delivery-title">
+        <h2 id="delivery-title" className="sr-only">
+          Como vais receber o teu e-book?
+        </h2>
+        {/* BANNER DA ENTREGA — substitua o ficheiro em src/assets (asset.json) pela sua nova imagem */}
+        <img
+          src={deliveryBanner.url}
+          alt="Como vais receber o teu e-book — é simples, rápido e seguro: 1. Faz a tua compra, preenchendo os dados no checkout; 2. Efectua o pagamento, escolhendo o método disponível; 3. Recebe o teu e-book por e-mail após a confirmação do pagamento, com o WhatsApp como apoio quando configurado"
+          width={1671}
+          height={941}
+          loading="lazy"
+          decoding="async"
+          className="block h-auto w-full"
+        />
       </section>
 
       {/* 6. Bloco principal de oferta */}
