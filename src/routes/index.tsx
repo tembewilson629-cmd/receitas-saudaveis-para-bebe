@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import heroBanner from "@/assets/sabores-que-crescem-hero.webp.asset.json";
+import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -60,20 +61,6 @@ const guideCategories = [
   "Pratinhos adaptados à mesa da família",
 ];
 
-const deliverySteps = [
-  {
-    title: "Faz a tua compra",
-    text: "Acede ao checkout e preenche os dados solicitados.",
-  },
-  {
-    title: "Efectua o pagamento",
-    text: "Escolhe um dos métodos de pagamento disponíveis no checkout.",
-  },
-  {
-    title: "Recebe o teu e-book",
-    text: "Após a confirmação do pagamento, recebes o acesso ao e-book por e-mail. O WhatsApp pode ser utilizado como apoio à entrega, quando configurado.",
-  },
-];
 
 // Depoimentos reais já fornecidos (WebP comprimido em public/depoimentos).
 // Para adicionar ou remover, edite esta lista.
