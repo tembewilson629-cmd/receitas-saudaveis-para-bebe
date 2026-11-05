@@ -43,7 +43,7 @@ export const Route = createFileRoute("/")({
 // ================== EDIÇÃO RÁPIDA ==================
 // Altere aqui os textos, o prazo do temporizador e o checkout.
 
-const CHECKOUT_URL = "https://checkout.escalepay.com/5515180";
+const CHECKOUT_URL = "https://pay.tutora.co.mz/687ef6b7655441aba48bc83fbd13b6f8";
 
 // Temporizador da barra superior. Inicia em 9:47 (587 segundos) no momento em
 // que o visitante entra na página. Persistido no navegador: o mesmo visitante
@@ -256,6 +256,7 @@ function Index() {
                   width={testimonial.width}
                   height={testimonial.height}
                   loading="lazy"
+                  fetchPriority="low"
                   decoding="async"
                 />
               </figure>
@@ -276,6 +277,7 @@ function Index() {
           width={1671}
           height={941}
           loading="lazy"
+          fetchPriority="low"
           decoding="async"
           className="block h-auto w-full"
         />
@@ -338,7 +340,7 @@ function Index() {
 
           {/* PREÇO + BOTÃO DE COMPRA */}
           <div className="mt-7 border-t border-offer-border pt-6 text-center">
-            <p className="text-4xl font-black leading-none text-primary sm:text-5xl">147 MT</p>
+            <p className="text-4xl font-black leading-none text-primary sm:text-5xl">2.549 Kz</p>
             <div className="mx-auto mt-5 max-w-lg">
               <CheckoutButton label="Quero o meu e-book" />
             </div>
