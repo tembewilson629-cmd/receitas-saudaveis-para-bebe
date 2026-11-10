@@ -326,24 +326,6 @@ function Index() {
             </div>
           </div>
 
-          {/* BÓNUS INCLUÍDO */}
-          <div className="mt-7 grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-3 rounded-xl border border-offer-border bg-bonus-bg p-3 sm:grid-cols-[7rem_minmax(0,1fr)] sm:p-4">
-            {/* IMAGEM DO BÓNUS — substitua este bloco pela sua imagem */}
-            <ImagePlaceholder label="Imagem do bónus" className="aspect-[3/4] w-full" />
-            <div className="min-w-0">
-              <p className="w-fit rounded-full bg-primary px-2.5 py-1 text-[0.68rem] font-extrabold uppercase tracking-wide text-primary-foreground sm:text-xs">
-                Bónus incluído
-              </p>
-              <h3 className="mt-1.5 text-base font-extrabold leading-tight sm:text-lg">
-                O que fazer quando o teu bebé recusa a comida
-              </h3>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                Um material complementar com orientações básicas para ajudar a mãe a compreender melhor
-                as dificuldades na hora da refeição e a lidar com a recusa alimentar.
-              </p>
-            </div>
-          </div>
-
           {/* PREÇO + BOTÃO DE COMPRA */}
           <div className="mt-7 border-t border-offer-border pt-6 text-center">
             <p className="text-4xl font-black leading-none text-primary sm:text-5xl">2.549 Kz</p>
