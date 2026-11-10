@@ -336,7 +336,17 @@ function Index() {
         </div>
       </section>
 
-      {/* 7. Reforço final e chamada para acção */}
+      {/* 7. Garantia — espaço reservado para o selo fornecido pelo utilizador */}
+      <section className="border-t border-border bg-accent px-5 py-10 text-center sm:px-6 sm:py-12" aria-labelledby="guarantee-title">
+        <h2 id="guarantee-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
+          Garantia
+        </h2>
+        <div className="mx-auto mt-5 max-w-40">
+          <ImagePlaceholder label="Espaço reservado para o selo de garantia" className="aspect-square w-full" />
+        </div>
+      </section>
+
+      {/* 8. Reforço final e chamada para acção */}
       <section className="border-t border-border bg-accent px-5 py-12 text-center sm:px-6 sm:py-16">
         <h2 className="mx-auto max-w-2xl font-display text-2xl font-extrabold leading-tight sm:text-3xl">
           Descobre novas possibilidades para as refeições do teu bebé.
