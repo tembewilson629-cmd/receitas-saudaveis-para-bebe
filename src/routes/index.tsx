@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import heroBanner from "@/assets/sabores-que-crescem-hero.webp.asset.json";
 import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
+import productCover from "@/assets/capa-sabores-que-crescem.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -291,10 +292,15 @@ function Index() {
           </h2>
 
           <div className="mt-7 grid items-start gap-6 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-8">
-            {/* IMAGEM DO PRODUTO — substitua este bloco pela capa ou mockup do e-book */}
-            <ImagePlaceholder
-              label="Imagem do e-book — adicione a capa ou mockup aqui"
-              className="aspect-[3/4] w-full max-w-56 justify-self-center md:max-w-none"
+            <img
+              src={productCover.url}
+              alt="Capa do e-book Sabores que Crescem, com 105 receitas para bebés dos 6 aos 24 meses"
+              width={1024}
+              height={1536}
+              loading="lazy"
+              fetchPriority="low"
+              decoding="async"
+              className="aspect-[3/4] w-full max-w-56 justify-self-center rounded-xl border border-border object-cover shadow-image md:max-w-none"
             />
             <div>
               <p className="w-fit rounded-full bg-secondary px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-secondary-foreground">
