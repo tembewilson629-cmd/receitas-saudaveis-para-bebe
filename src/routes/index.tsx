@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
-import heroBanner from "@/assets/sabores-que-crescem-hero.webp.asset.json";
+import { Button } from "@/components/ui/button";
+import heroBanner from "@/assets/angola_banner_receitas_bebes_3_1.webp.asset.json";
 import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
 import productCover from "@/assets/capa-sabores-que-crescem.webp.asset.json";
 
@@ -140,17 +141,40 @@ function ImagePlaceholder({ label, className }: { label: string; className?: str
 }
 
 function VideoPlaceholder() {
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => setIsHydrated(true), []);
+
   return (
-    <div className="relative mx-auto flex aspect-[9/16] w-full max-w-64 flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border-2 border-dashed border-placeholder-border bg-placeholder-bg px-4 text-center sm:max-w-72">
-      <span
-        className="flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-cta"
-        aria-hidden="true"
-      >
-        <span className="ml-1 block h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-current" />
-      </span>
-      <span className="text-xs font-semibold text-muted-foreground sm:text-sm">
-        Espaço reservado para o vídeo — será adicionado aqui
-      </span>
+    <div className="relative mx-auto aspect-[9/16] w-full max-w-64 overflow-hidden rounded-xl border border-border bg-placeholder-bg sm:max-w-72">
+      {isPlaying ? (
+        <iframe
+          className="absolute inset-0 size-full"
+          src="https://www.youtube-nocookie.com/embed/L_JNPBYVbdo?autoplay=1&playsinline=1&rel=0"
+          title="Vídeo de apresentação do Sabores que Crescem"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
+      ) : (
+        <div className="flex size-full flex-col items-center justify-center gap-3 px-4 text-center">
+          <Button
+            type="button"
+            variant="default"
+            size="icon"
+            className="size-14 rounded-full shadow-cta"
+            aria-label="Reproduzir vídeo de apresentação"
+            disabled={!isHydrated}
+            onClick={() => setIsPlaying(true)}
+          >
+            <span className="ml-1 block h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-current" aria-hidden="true" />
+          </Button>
+          <span className="text-xs font-semibold text-muted-foreground sm:text-sm">
+            Toca para ver o vídeo
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -208,8 +232,8 @@ function Index() {
         <img
           src={heroBanner.url}
           alt="Sabores que Crescem — 105 receitas para bebés, com exemplos de papinhas leves, papinhas grossas, saladas e comidas leves"
-          width={1122}
-          height={1402}
+          width={1538}
+          height={1920}
           fetchPriority="high"
           decoding="async"
           className="block h-auto w-full"
