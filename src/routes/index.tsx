@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import heroBanner from "@/assets/angola_banner_receitas_bebes_3_1.webp.asset.json";
 import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
 import productCover from "@/assets/capa-sabores-que-crescem.webp.asset.json";
+import videoPreview from "@/assets/sabores-que-crescem-video-preview.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -143,35 +144,60 @@ function ImagePlaceholder({ label, className }: { label: string; className?: str
 function VideoPlaceholder() {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => setIsHydrated(true), []);
 
   return (
     <div className="relative mx-auto aspect-[9/16] w-full max-w-64 overflow-hidden rounded-xl border border-border bg-placeholder-bg sm:max-w-72">
-      {isPlaying ? (
-        <iframe
-          className="absolute inset-0 size-full"
-          src="https://www.youtube-nocookie.com/embed/L_JNPBYVbdo?autoplay=1&playsinline=1&rel=0"
-          title="Vídeo de apresentação do Sabores que Crescem"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        />
-      ) : (
-        <div className="flex size-full flex-col items-center justify-center gap-3 px-4 text-center">
+      <iframe
+        ref={iframeRef}
+        className={`absolute inset-0 size-full ${isPlaying ? "z-10" : "pointer-events-none"}`}
+        src="https://www.youtube-nocookie.com/embed/L_JNPBYVbdo?enablejsapi=1&autoplay=1&mute=1&playsinline=1&rel=0&controls=1"
+        title="Vídeo de apresentação do Sabores que Crescem"
+        allow="autoplay; encrypted-media; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        loading="lazy"
+        onLoad={() => setIsPlayerReady(true)}
+      />
+      {!isPlaying && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 overflow-hidden px-4 text-center">
+          <img
+            className="absolute inset-0 size-full scale-110 object-cover blur-sm"
+            src={videoPreview.url}
+            alt=""
+            width={480}
+            height={360}
+            loading="lazy"
+            fetchPriority="low"
+            decoding="async"
+          />
           <Button
             type="button"
             variant="default"
             size="icon"
-            className="size-14 rounded-full shadow-cta"
+            className="relative size-14 rounded-full shadow-cta motion-safe:animate-[preview-pulse_1.8s_ease-in-out_infinite]"
             aria-label="Reproduzir vídeo de apresentação"
-            disabled={!isHydrated}
-            onClick={() => setIsPlaying(true)}
+            disabled={!isHydrated || !isPlayerReady}
+            onClick={() => {
+              const playerWindow = iframeRef.current?.contentWindow;
+              playerWindow?.postMessage(
+                JSON.stringify({ event: "command", func: "unMute", args: [] }),
+                "*",
+              );
+              playerWindow?.postMessage(
+                JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+                "*",
+              );
+              setIsPlaying(true);
+            }}
           >
             <span className="ml-1 block h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-current" aria-hidden="true" />
           </Button>
-          <span className="text-xs font-semibold text-muted-foreground sm:text-sm">
-            Toca para ver o vídeo
+          <span className="relative rounded bg-background px-2 py-1 text-xs font-semibold text-foreground sm:text-sm">
+            {isPlayerReady ? "Toca para ver o vídeo" : "A preparar o vídeo…"}
           </span>
         </div>
       )}
