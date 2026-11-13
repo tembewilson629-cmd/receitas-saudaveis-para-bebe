@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import heroBanner from "@/assets/angola_banner_receitas_bebes_3_1.webp.asset.json";
 import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
 import productCover from "@/assets/capa-sabores-que-crescem.webp.asset.json";
+import guaranteeSeal from "@/assets/selo-garantia-ebook.png.asset.json";
 import videoPreview from "@/assets/sabores-que-crescem-video-preview.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -100,14 +101,16 @@ function OfferTimerBar() {
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
 
   useEffect(() => {
-    let start = Number(window.localStorage.getItem(TIMER_STORAGE_KEY));
-    if (!Number.isFinite(start) || start <= 0) {
-      start = Date.now();
-      try {
+    let start = Date.now();
+    try {
+      const storedStart = Number(window.localStorage.getItem(TIMER_STORAGE_KEY));
+      if (Number.isFinite(storedStart) && storedStart > 0 && storedStart <= start) {
+        start = storedStart;
+      } else {
         window.localStorage.setItem(TIMER_STORAGE_KEY, String(start));
-      } catch {
-        // armazenamento indisponível: o temporizador funciona apenas nesta visita
       }
+    } catch {
+      // Sem armazenamento, a contagem continua durante esta visita.
     }
     const tick = () => {
       const elapsed = Math.floor((Date.now() - start) / 1000);
@@ -378,7 +381,7 @@ function Index() {
 
           {/* PREÇO + BOTÃO DE COMPRA */}
           <div className="mt-7 border-t border-offer-border pt-6 text-center">
-            <p className="text-4xl font-black leading-none text-primary sm:text-5xl">2.549 Kz</p>
+            <p className="text-4xl font-black leading-none text-primary sm:text-5xl">2.547 Kz</p>
             <div className="mx-auto mt-5 max-w-lg">
               <CheckoutButton label="Quero o meu e-book" />
             </div>
@@ -386,13 +389,22 @@ function Index() {
         </div>
       </section>
 
-      {/* 7. Garantia — espaço reservado para o selo fornecido pelo utilizador */}
+      {/* 7. Selo de garantia fornecido pelo utilizador */}
       <section className="border-t border-border bg-accent px-5 py-10 text-center sm:px-6 sm:py-12" aria-labelledby="guarantee-title">
         <h2 id="guarantee-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
           Garantia
         </h2>
         <div className="mx-auto mt-5 max-w-40">
-          <ImagePlaceholder label="Espaço reservado para o selo de garantia" className="aspect-square w-full" />
+          <img
+            src={guaranteeSeal.url}
+            alt="Selo de garantia de 7 dias"
+            width={480}
+            height={480}
+            loading="lazy"
+            fetchPriority="low"
+            decoding="async"
+            className="aspect-square w-full object-contain"
+          />
         </div>
       </section>
 
