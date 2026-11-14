@@ -9,6 +9,15 @@ import productCover from "@/assets/capa-sabores-que-crescem.webp.asset.json";
 import guaranteeSeal from "@/assets/selo-garantia-ebook.png.asset.json";
 import videoPreview from "@/assets/sabores-que-crescem-video-preview.jpg.asset.json";
 
+const trackMetaEvent = (eventName: string) => {
+  if (typeof window !== "undefined") {
+    const fbq = (window as typeof window & { fbq?: (...args: unknown[]) => void }).fbq;
+    if (typeof fbq === "function") {
+      fbq("track", eventName);
+    }
+  }
+};
+
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
@@ -38,7 +47,7 @@ export const Route = createFileRoute("/")({
     scripts: [
       {
         type: "text/javascript",
-        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1454533756172964');fbq('track','PageView');`,
+        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1454533756172964');fbq('track','PageView');fbq('track','ViewContent');`,
       },
     ],
   }),
@@ -289,7 +298,10 @@ function CheckoutButton({ label, className }: { label: string; className?: strin
       href={CHECKOUT_URL}
       aria-busy={isLoading}
       aria-disabled={isLoading}
-      onClick={() => setIsLoading(true)}
+      onClick={() => {
+        trackMetaEvent("Lead");
+        setIsLoading(true);
+      }}
     >
       {isLoading ? (
         <>
