@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { UsersRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import heroBanner from "@/assets/angola_banner_receitas_bebes_3_1.webp.asset.json";
@@ -32,7 +33,6 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "/" },
-      // O banner é o maior elemento visível (LCP): pré-carregado com prioridade máxima.
       { rel: "preload", as: "image", href: heroBanner.url, fetchPriority: "high" },
     ],
     scripts: [
@@ -46,16 +46,12 @@ export const Route = createFileRoute("/")({
 
 // ================== EDIÇÃO RÁPIDA ==================
 // Altere aqui os textos, o prazo do temporizador e o checkout.
-
 const CHECKOUT_URL = "https://pay.tutora.co.mz/687ef6b7655441aba48bc83fbd13b6f8";
-
-// Temporizador da barra superior. Inicia em 9:47 (587 segundos) no momento em
-// que o visitante entra na página. Persistido no navegador: o mesmo visitante
-// não recebe tempo novo ao actualizar a página.
 const TIMER_DURATION_SECONDS = 9 * 60 + 47;
 const TIMER_STORAGE_KEY = "sqc-offer-timer-start";
 const TIMER_LABEL = "Esta oportunidade termina em:";
-
+const MIN_VIEWERS = 13;
+const MAX_VIEWERS = 27;
 
 const guideCategories = [
   "Papinhas leves",
@@ -65,9 +61,6 @@ const guideCategories = [
   "Pratinhos adaptados à mesa da família",
 ];
 
-
-// Depoimentos reais já fornecidos (WebP comprimido em public/depoimentos).
-// Para adicionar ou remover, edite esta lista.
 const testimonials = [
   {
     src: "/depoimentos/depoimento-judite.webp",
@@ -88,7 +81,6 @@ const testimonials = [
     height: 1090,
   },
 ];
-
 // ================== FIM DA EDIÇÃO RÁPIDA ==================
 
 function formatTimer(totalSeconds: number) {
@@ -129,17 +121,6 @@ function OfferTimerBar() {
           {secondsLeft === null ? formatTimer(TIMER_DURATION_SECONDS) : formatTimer(secondsLeft)}
         </span>
       </p>
-    </div>
-  );
-}
-
-
-function ImagePlaceholder({ label, className }: { label: string; className?: string }) {
-  return (
-    <div
-      className={`flex flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border-2 border-dashed border-placeholder-border bg-placeholder-bg px-4 text-center ${className ?? ""}`}
-    >
-      <span className="text-xs font-semibold text-muted-foreground sm:text-sm">{label}</span>
     </div>
   );
 }
@@ -197,7 +178,10 @@ function VideoPlaceholder() {
               setIsPlaying(true);
             }}
           >
-            <span className="ml-1 block h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-current" aria-hidden="true" />
+            <span
+              className="ml-1 block h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-current"
+              aria-hidden="true"
+            />
           </Button>
           <span className="relative rounded bg-background px-2 py-1 text-xs font-semibold text-foreground sm:text-sm">
             {isPlayerReady ? "Toca para ver o vídeo" : "A preparar o vídeo…"}
@@ -205,6 +189,94 @@ function VideoPlaceholder() {
         </div>
       )}
     </div>
+  );
+}
+
+function ViewerIndicator({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
+  const [viewerCount, setViewerCount] = useState(18);
+  const [isInView, setIsInView] = useState(false);
+  const [isPageVisible, setIsPageVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.01 },
+    );
+    observer.observe(section);
+
+    const updatePageVisibility = () => setIsPageVisible(document.visibilityState === "visible");
+    updatePageVisibility();
+    document.addEventListener("visibilitychange", updatePageVisibility);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", updatePageVisibility);
+    };
+  }, [sectionRef]);
+
+  useEffect(() => {
+    if (!isInView || !isPageVisible) return;
+
+    const delay = 8000 + Math.floor(Math.random() * 10001);
+    const timeout = window.setTimeout(() => {
+      setViewerCount((current) => {
+        const direction =
+          current <= MIN_VIEWERS
+            ? 1
+            : current >= MAX_VIEWERS
+              ? -1
+              : Math.random() < 0.5
+                ? -1
+                : 1;
+        const change = 1 + Math.floor(Math.random() * 3);
+        return Math.min(MAX_VIEWERS, Math.max(MIN_VIEWERS, current + direction * change));
+      });
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [isInView, isPageVisible, viewerCount]);
+
+  return (
+    <div className="mx-auto mt-4 flex w-fit max-w-full items-center justify-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground shadow-sm">
+      <span className="relative flex size-2 shrink-0" aria-hidden="true">
+        <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500 opacity-60" />
+        <span className="relative inline-flex size-2 rounded-full bg-green-600" />
+      </span>
+      <UsersRound className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+      <span className="text-left">Pessoas a assistir neste momento</span>
+      <span className="font-extrabold tabular-nums text-foreground" aria-label={`${viewerCount} pessoas`}>
+        {viewerCount}
+      </span>
+    </div>
+  );
+}
+
+function VideoSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="border-y border-border bg-accent px-5 py-10 sm:px-6 sm:py-14"
+      aria-labelledby="video-title"
+    >
+      <div className="mx-auto max-w-3xl text-center">
+        <h2 id="video-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
+          Vê o que vais encontrar dentro do Sabores que Crescem
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+          Conhece melhor o guia, vê os tipos de receitas incluídas e descobre como está organizado
+          para te ajudar a planear as refeições do teu bebé.
+        </p>
+        <div className="mt-8">
+          <VideoPlaceholder />
+        </div>
+        <ViewerIndicator sectionRef={sectionRef} />
+      </div>
+    </section>
   );
 }
 
@@ -246,18 +318,10 @@ function Index() {
           src="https://www.facebook.com/tr?id=4083380155288045&ev=PageView&noscript=1"
         />
       </noscript>
-
-      {/* 1. Barra superior com temporizador */}
       <OfferTimerBar />
 
-      {/* 2. Secção de abertura: o banner ocupa a headline, a sub-headline e o banner principal,
-          atingindo as bordas laterais da página (sem espaços às lados). */}
       <section className="pb-10 pt-2 sm:pb-14" aria-label="Apresentação do guia">
-        {/* Headline em texto acessível a leitores de ecrã e motores de busca; visualmente o banner é a headline. */}
-        <h1 className="sr-only">
-          Sabores que Crescem — 105 receitas para bebés dos 6 aos 24 meses
-        </h1>
-        {/* BANNER PRINCIPAL — substitua o ficheiro em src/assets (asset.json) pela sua nova imagem */}
+        <h1 className="sr-only">Sabores que Crescem — 105 receitas para bebés dos 6 aos 24 meses</h1>
         <img
           src={heroBanner.url}
           alt="Sabores que Crescem — 105 receitas para bebés, com exemplos de papinhas leves, papinhas grossas, saladas e comidas leves"
@@ -269,27 +333,8 @@ function Index() {
         />
       </section>
 
-      {/* 3. Vídeo explicativo */}
-      <section
-        className="border-y border-border bg-accent px-5 py-10 sm:px-6 sm:py-14"
-        aria-labelledby="video-title"
-      >
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 id="video-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
-            Vê o que vais encontrar dentro do Sabores que Crescem
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Conhece melhor o guia, vê os tipos de receitas incluídas e descobre como está organizado
-            para te ajudar a planear as refeições do teu bebé.
-          </p>
-          {/* VÍDEO — substitua este bloco pelo seu vídeo (vertical/quadrado, sem ultrapassar o ecrã) */}
-          <div className="mt-8">
-            <VideoPlaceholder />
-          </div>
-        </div>
-      </section>
+      <VideoSection />
 
-      {/* 4. Depoimentos de clientes */}
       <section className="px-5 py-10 sm:px-6 sm:py-14" aria-labelledby="testimonials-title">
         <div className="mx-auto max-w-6xl">
           <div className="pb-6 text-center">
@@ -319,15 +364,11 @@ function Index() {
         </div>
       </section>
 
-      {/* 5. Como o cliente recebe o produto — banner completo (substitui os passos em texto) */}
       <section aria-labelledby="delivery-title">
-        <h2 id="delivery-title" className="sr-only">
-          Como vais receber o teu e-book?
-        </h2>
-        {/* BANNER DA ENTREGA — substitua o ficheiro em src/assets (asset.json) pela sua nova imagem */}
+        <h2 id="delivery-title" className="sr-only">Como vais receber o teu e-book?</h2>
         <img
           src={deliveryBanner.url}
-          alt="Como vais receber o teu e-book — é simples, rápido e seguro: 1. Faz a tua compra, preenchendo os dados no checkout; 2. Efectua o pagamento, escolhendo o método disponível; 3. Recebe o teu e-book por e-mail após a confirmação do pagamento, com o WhatsApp como apoio quando configurado"
+          alt="Como vais receber o teu e-book — é simples, rápido e seguro: faz a tua compra, efectua o pagamento e recebe o e-book por e-mail após a confirmação."
           width={1671}
           height={941}
           loading="lazy"
@@ -337,13 +378,11 @@ function Index() {
         />
       </section>
 
-      {/* 6. Bloco principal de oferta */}
       <section className="px-4 py-10 sm:px-6 sm:py-14" aria-labelledby="offer-title">
         <div className="mx-auto max-w-4xl rounded-2xl border border-offer-border bg-card p-4 shadow-offer sm:p-7">
           <h2 id="offer-title" className="text-center font-display text-2xl font-extrabold leading-tight sm:text-3xl">
             Tudo o que precisas para descobrir novas ideias para as refeições do teu bebé
           </h2>
-
           <div className="mt-7 grid items-start gap-6 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-8">
             <img
               src={productCover.url}
@@ -378,8 +417,6 @@ function Index() {
               </ul>
             </div>
           </div>
-
-          {/* PREÇO + BOTÃO DE COMPRA */}
           <div className="mt-7 border-t border-offer-border pt-6 text-center">
             <p className="text-4xl font-black leading-none text-primary sm:text-5xl">2.547 Kz</p>
             <div className="mx-auto mt-5 max-w-lg">
@@ -389,7 +426,6 @@ function Index() {
         </div>
       </section>
 
-      {/* 7. Selo de garantia fornecido pelo utilizador */}
       <section className="border-t border-border bg-accent px-5 py-10 text-center sm:px-6 sm:py-12" aria-labelledby="guarantee-title">
         <h2 id="guarantee-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">
           Garantia
@@ -408,7 +444,6 @@ function Index() {
         </div>
       </section>
 
-      {/* 8. Reforço final e chamada para acção */}
       <section className="border-t border-border bg-accent px-5 py-12 text-center sm:px-6 sm:py-16">
         <h2 className="mx-auto max-w-2xl font-display text-2xl font-extrabold leading-tight sm:text-3xl">
           Descobre novas possibilidades para as refeições do teu bebé.
