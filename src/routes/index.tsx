@@ -91,7 +91,7 @@ function PurchaseNotifications() {
   useEffect(() => {
     const markInteractive = () => {
       setIsInteractive(true);
-      if (idleTimeoutRef.current) window.clearTimeout(idleTimeoutRef.current);
+      if (idleTimeoutRef.current !== null) window.clearTimeout(idleTimeoutRef.current);
       idleTimeoutRef.current = window.setTimeout(() => setIsInteractive(false), 2500);
     };
     const listeners: Array<[string, EventListener]> = [
@@ -101,7 +101,7 @@ function PurchaseNotifications() {
     listeners.forEach(([eventName, handler]) => window.addEventListener(eventName, handler, { passive: true }));
     return () => {
       listeners.forEach(([eventName, handler]) => window.removeEventListener(eventName, handler));
-      if (idleTimeoutRef.current) window.clearTimeout(idleTimeoutRef.current);
+      if (idleTimeoutRef.current !== null) window.clearTimeout(idleTimeoutRef.current);
     };
   }, []);
 
@@ -120,7 +120,7 @@ function PurchaseNotifications() {
   return (
     <div className="pointer-events-none fixed bottom-4 right-4 z-50 w-[min(22rem,calc(100vw-1.5rem))]" aria-live="polite" aria-atomic="true">
       <div key={notification.id} className="animate-[fadeIn_0.25s_ease-out] rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground shadow-offer">
-        <p><span className="font-bold">Exemplo ilustrativo:</span> {notification.name} — notificação demonstrativa; não confirma uma compra.</p>
+        <p><span className="font-semibold">Demonstração:</span> {notification.name} adquiriu o guia.</p>
       </div>
     </div>
   );
