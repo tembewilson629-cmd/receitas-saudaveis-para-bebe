@@ -7,14 +7,14 @@
  * PALETA OFICIAL (única fonte de verdade — apenas HEX, sem oklch, color-mix,
  * rgba sobre fundos ou cores do sistema; nada varia entre navegadores):
  *   Fundo principal:            #F6EDE0
- *   Fundo secundário/cartões:   #F2E6D3
+ *   Fundo secundário/cartões:    #F2E6D3
  *   Texto principal:            #1A1A1A
  *   Texto secundário:           #4A3F3A
- *   Bordô (CTA, barra, títulos):#7C0F2E
- *   Texto de botões/barra:      #FFFFFF
- *   Dourado (detalhes):         #B8924A
- *   Etiquetas/badges (rosa):    #C85A72
- *   Bordas e divisórias:        #E3D3BA
+ *   Bordô (CTA, barra, títulos): #7C0F2E
+ *   Texto de botões/barra:       #FFFFFF
+ *   Dourado (detalhes):          #B8924A
+ *   Etiquetas/badges (rosa):     #C85A72
+ *   Bordas e divisórias:         #E3D3BA
  *
  * Modo escuro desativado: a paleta permanece igual independentemente do tema
  * do navegador, com color-scheme: only light e sem variantes dark.
@@ -175,6 +175,10 @@
 
   a {
     color: inherit;
+  }
+
+  a[href*="lovable"] {
+    display: none !important;
   }
 
   button {
