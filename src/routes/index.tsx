@@ -61,6 +61,58 @@ const TIMER_STORAGE_KEY = "sqc-offer-timer-start";
 const TIMER_LABEL = "Esta oportunidade termina em:";
 const MIN_VIEWERS = 13;
 const MAX_VIEWERS = 27;
+const SALE_NAMES = [
+  "Maria Luísa Kiala",
+  "Ana Paula Ngola",
+  "Isabel Domingas Matondo",
+  "Joana Tchissola",
+  "Teresa Kimbamba",
+  "Luzia Nzinga",
+  "Beatriz Mavungo",
+  "Carolina Quissanga",
+  "Fátima Cambinda",
+  "Domingas Chilombo",
+  "Albertina Mbala",
+  "Esperança Kambunji",
+  "Celeste Sambo",
+  "Filomena Cuanza",
+  "Graça Lukamba",
+  "Helena Tchindele",
+  "Inês Bunga",
+  "Josefa Malonga",
+  "Lurdes Kassoma",
+  "Madalena Zua",
+  "Natália Kipungu",
+  "Odete Samakuva",
+  "Paula Quimbanda",
+  "Rosa Mussungo",
+  "Sandra Lutucuta",
+  "Sónia Kalandula",
+  "Telma Kapingala",
+  "Ulda Mpinda",
+  "Vanda Chivukuvuku",
+  "Zuleica Capita",
+  "Adriana Nsimba",
+  "Benvinda Kiluange",
+  "Cláudia Tembo",
+  "Dalila Ngunza",
+  "Edna Cassule",
+  "Flávia Kalunga",
+  "Gisela Muanza",
+  "Hortênsia Bumba",
+  "Ivone Katumbela",
+  "Jacinta Mukuba",
+  "Kátia Lemba",
+  "Luena Quiteque",
+  "Mariana Kussunga",
+  "Nádia Cahala",
+  "Olinda Quissama",
+  "Palmira Lubanzadio",
+  "Quitéria Mabiala",
+  "Rute Kangamba",
+  "Silvana Chitunda",
+  "Tânia Muhongo",
+];
 
 const guideCategories = [
   "Papinhas leves",
@@ -96,6 +148,104 @@ function formatTimer(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function getRandomName(excludedNames: string[] = []) {
+  const availableNames = SALE_NAMES.filter((name) => !excludedNames.includes(name));
+  const pool = availableNames.length > 0 ? availableNames : SALE_NAMES;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function PurchaseNotifications() {
+  const [notifications, setNotifications] = useState<Array<{ id: number; name: string }>>([]);
+  const [isInteractive, setIsInteractive] = useState(true);
+  const idleTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const markInteractive = () => {
+      setIsInteractive(true);
+
+      if (idleTimeoutRef.current) {
+        window.clearTimeout(idleTimeoutRef.current);
+      }
+
+      idleTimeoutRef.current = window.setTimeout(() => {
+        setIsInteractive(false);
+      }, 2500);
+    };
+
+    const listeners: Array<[string, EventListener]> = [
+      ["pointerdown", markInteractive],
+      ["pointermove", markInteractive],
+      ["keydown", markInteractive],
+      ["touchstart", markInteractive],
+      ["scroll", markInteractive],
+    ];
+
+    listeners.forEach(([eventName, handler]) => {
+      window.addEventListener(eventName, handler);
+    });
+
+    markInteractive();
+
+    return () => {
+      listeners.forEach(([eventName, handler]) => {
+        window.removeEventListener(eventName, handler);
+      });
+
+      if (idleTimeoutRef.current) {
+        window.clearTimeout(idleTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isInteractive || typeof window === "undefined") return;
+
+    const addNotification = () => {
+      setNotifications((current) => {
+        const previousNames = current.map((item) => item.name);
+        const nextName = getRandomName(previousNames);
+
+        return [
+          ...current,
+          {
+            id: Date.now() + Math.random(),
+            name: nextName,
+          },
+        ].slice(-3);
+      });
+    };
+
+    addNotification();
+    const interval = window.setInterval(addNotification, 7000);
+
+    return () => window.clearInterval(interval);
+  }, [isInteractive]);
+
+  if (notifications.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex w-[min(22rem,calc(100vw-1.5rem))] flex-col gap-2" aria-live="polite" aria-atomic="true">
+      {notifications.map((notification) => (
+        <div
+          key={notification.id}
+          className="animate-[fadeIn_0.25s_ease-out] rounded-xl border border-emerald-200/80 bg-white/95 px-3 py-2 shadow-[0_10px_25px_rgba(15,23,42,0.12)] backdrop-blur-sm"
+        >
+          <p className="flex items-center gap-2 text-left text-xs font-medium text-slate-600 sm:text-sm">
+            <span className="inline-flex size-2.5 shrink-0 rounded-full bg-emerald-500" aria-hidden="true" />
+            <span>
+              <span className="font-extrabold text-slate-900">{notification.name}</span> acabou de comprar o guia.
+            </span>
+          </p>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function OfferTimerBar() {
@@ -464,6 +614,8 @@ function Index() {
           <CheckoutButton label="Quero aceder ao guia" />
         </div>
       </section>
+
+      <PurchaseNotifications />
     </main>
   );
 }
