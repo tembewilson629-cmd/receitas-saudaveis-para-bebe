@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { UsersRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import heroBanner from "@/assets/angola_banner_receitas_bebes_3_1.webp.asset.json";
+import heroBanner from "@/assets/receitas-saudaveis-banner.webp.asset.json";
 import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
 import productCover from "@/assets/capa-sabores-que-crescem.webp.asset.json";
 import guaranteeSeal from "@/assets/selo-garantia-ebook.png.asset.json";
@@ -40,7 +40,6 @@ export const Route = createFileRoute("/")({
 });
 
 // ================== EDIÇÃO RÁPIDA ==================
-// Altere aqui os textos, o prazo do temporizador e o checkout.
 const CHECKOUT_URL = "https://pay.tutora.co.mz/687ef6b7655441aba48bc83fbd13b6f8";
 const TIMER_DURATION_SECONDS = 9 * 60 + 47;
 const TIMER_STORAGE_KEY = "sqc-offer-timer-start";
