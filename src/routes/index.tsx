@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { UsersRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import heroBanner from "@/assets/file_00000000898c8211bbac3c406716fa09.png.asset.json";
+import heroBanner from "@/assets/angola_banner_receitas_bebes_3_1.webp.asset.json";
 import deliveryBanner from "@/assets/como-vais-receber.webp.asset.json";
 import productCover from "@/assets/capa-sabores-que-crescem.webp.asset.json";
 import guaranteeSeal from "@/assets/selo-garantia-ebook.png.asset.json";
@@ -40,6 +40,7 @@ export const Route = createFileRoute("/")({
 });
 
 // ================== EDIÇÃO RÁPIDA ==================
+// Altere aqui os textos, o prazo do temporizador e o checkout.
 const CHECKOUT_URL = "https://pay.tutora.co.mz/687ef6b7655441aba48bc83fbd13b6f8";
 const TIMER_DURATION_SECONDS = 9 * 60 + 47;
 const TIMER_STORAGE_KEY = "sqc-offer-timer-start";
@@ -84,43 +85,51 @@ function getRandomName(previousName?: string) {
 
 function PurchaseNotifications() {
   const [notification, setNotification] = useState<{ id: number; name: string } | null>(null);
-  const [isInteractive, setIsInteractive] = useState(false);
+  const [isInteractive, setIsInteractive] = useState(true);
   const idleTimeoutRef = useRef<number | null>(null);
   const previousNameRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
     const markInteractive = () => {
       setIsInteractive(true);
-      if (idleTimeoutRef.current !== null) window.clearTimeout(idleTimeoutRef.current);
+      if (idleTimeoutRef.current) window.clearTimeout(idleTimeoutRef.current);
       idleTimeoutRef.current = window.setTimeout(() => setIsInteractive(false), 2500);
     };
     const listeners: Array<[string, EventListener]> = [
       ["pointerdown", markInteractive], ["pointermove", markInteractive], ["keydown", markInteractive],
       ["touchstart", markInteractive], ["scroll", markInteractive],
     ];
-    listeners.forEach(([eventName, handler]) => window.addEventListener(eventName, handler, { passive: true }));
+    listeners.forEach(([eventName, handler]) => window.addEventListener(eventName, handler));
+    markInteractive();
     return () => {
       listeners.forEach(([eventName, handler]) => window.removeEventListener(eventName, handler));
-      if (idleTimeoutRef.current !== null) window.clearTimeout(idleTimeoutRef.current);
+      if (idleTimeoutRef.current) window.clearTimeout(idleTimeoutRef.current);
     };
   }, []);
 
   useEffect(() => {
     if (!isInteractive) return;
-    const timeout = window.setTimeout(() => {
+    const interval = window.setInterval(() => {
       const name = getRandomName(previousNameRef.current);
       previousNameRef.current = name;
       setNotification({ id: Date.now(), name });
     }, PURCHASE_NOTIFICATION_INTERVAL);
-    return () => window.clearTimeout(timeout);
-  }, [isInteractive, notification]);
+    return () => window.clearInterval(interval);
+  }, [isInteractive]);
 
   if (!notification) return null;
 
   return (
     <div className="pointer-events-none fixed bottom-4 right-4 z-50 w-[min(22rem,calc(100vw-1.5rem))]" aria-live="polite" aria-atomic="true">
-      <div key={notification.id} className="animate-[fadeIn_0.25s_ease-out] rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground shadow-offer">
-        <p><span className="font-semibold">Demonstração:</span> {notification.name} adquiriu o guia.</p>
+      <div key={notification.id} className="animate-[fadeIn_0.25s_ease-out] overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-3 shadow-[0_12px_32px_rgba(15,23,42,0.16)] backdrop-blur-xl">
+        <div className="flex items-start gap-3">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-lg" aria-hidden="true">🥣</span>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-bold text-slate-900">Inspiração para refeições do bebé</p>
+            <p className="mt-0.5 text-sm leading-snug text-slate-700">Exemplo de cliente: <span className="font-semibold text-slate-900">{notification.name}</span></p>
+            <p className="mt-1 text-[11px] leading-snug text-slate-500">Nome ilustrativo — não representa uma compra real.</p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -225,7 +234,7 @@ function Index() {
   return <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
     <noscript><img alt="" height="1" width="1" style={{ display: "none" }} src="https://www.facebook.com/tr?id=1454533756172964&ev=PageView&noscript=1" /></noscript>
     <OfferTimerBar />
-    <section className="p-0" aria-label="Apresentação do guia"><h1 className="sr-only">Sabores que Crescem — 105 receitas para bebés dos 6 aos 24 meses</h1><img src={heroBanner.url} alt="Mais de 100 receitas para bebés — guia Sabores que Crescem com ideias de refeições infantis" width={1664} height={2560} fetchPriority="high" decoding="async" className="block h-auto w-full" /></section>
+    <section className="pb-10 pt-2 sm:pb-14" aria-label="Apresentação do guia"><h1 className="sr-only">Sabores que Crescem — 105 receitas para bebés dos 6 aos 24 meses</h1><img src={heroBanner.url} alt="Sabores que Crescem — 105 receitas para bebés, com exemplos de papinhas leves, papinhas grossas, saladas e comidas leves" width={1538} height={1920} fetchPriority="high" decoding="async" className="block h-auto w-full" /></section>
     <VideoSection />
     <section className="px-5 py-10 sm:px-6 sm:py-14" aria-labelledby="testimonials-title"><div className="mx-auto max-w-6xl"><div className="pb-6 text-center"><h2 id="testimonials-title" className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">O que dizem as mães que já conheceram o guia</h2></div><div className="carousel-scroll flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible">{testimonials.map((testimonial) => <figure key={testimonial.src} className="w-[74vw] max-w-72 shrink-0 snap-start overflow-hidden rounded-xl border border-border bg-card shadow-image sm:mx-auto sm:w-full"><img className="h-auto w-full" src={testimonial.src} alt={testimonial.alt} width={testimonial.width} height={testimonial.height} loading="lazy" fetchPriority="low" decoding="async" /></figure>)}</div></div></section>
     <section aria-labelledby="delivery-title"><h2 id="delivery-title" className="sr-only">Como vais receber o teu e-book?</h2><img src={deliveryBanner.url} alt="Como vais receber o teu e-book — é simples, rápido e seguro: faz a tua compra, efectua o pagamento e recebe o e-book por e-mail após a confirmação." width={1671} height={941} loading="lazy" fetchPriority="low" decoding="async" className="block h-auto w-full" /></section>

@@ -16,8 +16,8 @@
  *   Etiquetas/badges (rosa):    #C85A72
  *   Bordas e divisórias:        #E3D3BA
  *
- * Modo escuro desativado: a paleta permanece igual independentemente do tema
- * do navegador, com color-scheme: only light e sem variantes dark.
+ * Modo escuro desativado: não existe variante dark, @media
+ * prefers-color-scheme ou cor dependente do navegador.
  */
 
 @theme inline {
@@ -132,17 +132,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-  }
-
-  /* Banner principal em largura total da janela, sem margens laterais. */
-  section[aria-label="Apresentação do guia"] img {
-    display: block;
-    position: relative;
-    left: 50%;
-    width: 100vw;
-    max-width: none;
-    height: auto;
-    transform: translateX(-50%);
   }
 
   /* Controlos nativos: nunca usar estilos do navegador */
