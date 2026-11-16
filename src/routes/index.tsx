@@ -65,22 +65,33 @@ function OfferTimerBar() {
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
 
   useEffect(() => {
-    let start = Date.now();
+    const now = Date.now();
+    let start = now;
     try {
-      const storedStart = Number(window.localStorage.getItem(TIMER_STORAGE_KEY));
-      if (Number.isFinite(storedStart) && storedStart > 0 && storedStart <= start) {
-        start = storedStart;
+      const storedStart = window.localStorage.getItem(TIMER_STORAGE_KEY);
+      const parsedStart = storedStart === null ? Number.NaN : Number(storedStart);
+      if (Number.isFinite(parsedStart) && parsedStart > 0 && parsedStart <= now) {
+        start = parsedStart;
       } else {
-        window.localStorage.setItem(TIMER_STORAGE_KEY, String(start));
+        window.localStorage.setItem(TIMER_STORAGE_KEY, String(now));
       }
     } catch {
       // Sem armazenamento, a contagem continua durante esta visita.
     }
 
-    const tick = () => setSecondsLeft(Math.max(0, TIMER_DURATION_SECONDS - Math.floor((Date.now() - start) / 1000)));
-    tick();
-    const interval = window.setInterval(tick, 1000);
-    return () => window.clearInterval(interval);
+    const deadline = start + TIMER_DURATION_SECONDS * 1000;
+    const updateRemaining = () => {
+      const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      setSecondsLeft(remaining);
+    };
+    updateRemaining();
+    const interval = window.setInterval(updateRemaining, 1000);
+    document.addEventListener("visibilitychange", updateRemaining);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", updateRemaining);
+    };
   }, []);
 
   return <div className="sticky top-0 z-40 bg-timer-bar px-3 py-2">
