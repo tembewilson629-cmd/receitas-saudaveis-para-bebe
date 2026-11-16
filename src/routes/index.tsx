@@ -100,7 +100,7 @@ function VideoPlaceholder() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   useEffect(() => setIsHydrated(true), []);
 
-  return <div className="relative mx-auto aspect-[9/16] w-full max-w-72 overflow-hidden rounded-xl border border-border bg-placeholder-bg sm:max-w-80">
+  return <div className="relative mx-auto aspect-[9/16] w-full max-w-64 overflow-hidden rounded-xl border border-border bg-placeholder-bg sm:max-w-72">
     <iframe
       ref={iframeRef}
       className={`absolute inset-0 size-full ${isPlaying ? "z-10" : "pointer-events-none"}`}
